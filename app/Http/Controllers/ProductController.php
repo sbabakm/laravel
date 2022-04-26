@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use Illuminate\Http\Request;
+
+class ProductController extends Controller
+{
+    public function index() {
+        $products = Product::orderBy('id','desc')->paginate(12);
+        return view('home.all', compact('products'));
+    }
+
+    public function single(Product $product) {
+        return view('home.single', compact('product'));
+    }
+}
