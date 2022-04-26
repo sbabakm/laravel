@@ -16,7 +16,7 @@ Route::resource('permissions', PermissionController::class);
 
 Route::resource('roles', RoleController::class);
 
-Route::resource('home', ProductController::class)->except('show');
+Route::resource('products', ProductController::class)->except('show');
 
 
 

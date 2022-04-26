@@ -5,7 +5,7 @@
     @endslot
 
     <div class="d-flex">
-        <a class="btn btn-sm btn-success mb-1 ml-1" href="{{ route('admin.home.create') }}">ایجاد محصول</a>
+        <a class="btn btn-sm btn-success mb-1 ml-1" href="{{ route('admin.products.create') }}">ایجاد محصول</a>
         <form action="">
             <div class="input-group input-group-sm" style="width: 150px;">
                 <input type="text" name="search" class="form-control float-right" placeholder="جستجو" value="{{ request('search') }}">
@@ -42,25 +42,25 @@
                 <td>{{ $product->inventory }}</td>
                 <td>{{ $product->view_count }}</td>
                 <td class="d-flex">
-                    <form action="{{ route('admin.home.destroy' , $product) }}" method="POST">
+                    <form action="{{ route('admin.products.destroy' , $product) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-sm btn-danger">حذف</button>
                     </form>
 {{--                    @can('edit-product')--}}
-{{--                        <a href="{{ route('admin.home.edit' , $product) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>--}}
+{{--                        <a href="{{ route('admin.products.edit' , $product) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>--}}
 {{--                    @endcan--}}
-                    <a href="{{ route('admin.home.edit' , $product) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
+                    <a href="{{ route('admin.products.edit' , $product) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
 {{--    <div class="card-footer">--}}
-{{--        {{ $home->render() }}--}}
+{{--        {{ $products->render() }}--}}
 {{--    </div>--}}
     <div class="d-flex justify-content-center">
         {{ $products->withQueryString()->links("pagination::bootstrap-4") }}
-{{--        {{ $home->appends(['search' => request('search')])->links("pagination::bootstrap-4") }}--}}
+{{--        {{ $products->appends(['search' => request('search')])->links("pagination::bootstrap-4") }}--}}
     </div>
 @endcomponent

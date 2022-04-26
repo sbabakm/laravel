@@ -23,10 +23,10 @@ class ProductController extends Controller
 
 
 
-        //$home = $home->latest()->paginate(12);
+        //$products = $products->latest()->paginate(12);
         $products = $products->orderBy('id','desc')->paginate(12);
 
-        return view('admin.home.all' , compact('products'));
+        return view('admin.products.all' , compact('products'));
 
     }
 
@@ -37,7 +37,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.home.create');
+        return view('admin.products.create');
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductController extends Controller
 
         auth()->user()->products()->create($validate_data);
 
-        return redirect(route('admin.home.index'));
+        return redirect(route('admin.products.index'));
     }
 
     /**
@@ -68,7 +68,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('admin.home.edit', compact('product'));
+        return view('admin.products.edit', compact('product'));
     }
 
     /**
@@ -89,7 +89,7 @@ class ProductController extends Controller
 
         $product->update($validate_data);
 
-        return redirect(route('admin.home.index'));
+        return redirect(route('admin.products.index'));
 
     }
 

@@ -70,7 +70,7 @@ Route::middleware('auth')->group(function (){
     Route::post('profile/twofactor/phone', [App\Http\Controllers\Profile\ProfileController::class , 'postPhoneVerify']);
 });
 
-Route::get('/home', [App\Http\Controllers\ProductController::class, 'index']);
+Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/product/{product}', [App\Http\Controllers\ProductController::class, 'single']);
 
 //test

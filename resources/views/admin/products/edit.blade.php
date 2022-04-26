@@ -1,7 +1,7 @@
 @component('admin.layouts.content' , ['title' => 'ویرایش محصولات'])
     @slot('breadcrumb')
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('admin.home.index') }}">لیست محصولات</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.products.index') }}">لیست محصولات</a></li>
         <li class="breadcrumb-item active">ویرایش محصول</li>
     @endslot
 
@@ -14,7 +14,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="{{ route('admin.home.update' , $product) }}" method="POST">
+                <form class="form-horizontal" action="{{ route('admin.products.update' , $product) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
@@ -40,7 +40,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <button type="submit" class="btn btn-info">ویرایش محصول</button>
-                        <a href="{{ route('admin.home.index') }}" class="btn btn-default float-left">لغو</a>
+                        <a href="{{ route('admin.products.index') }}" class="btn btn-default float-left">لغو</a>
                     </div>
                     <!-- /.card-footer -->
                 </form>
