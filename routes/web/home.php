@@ -37,6 +37,26 @@ Route::get('/', function () {
 
 //    dd(auth()->user()->activeCode);
 
+    $product = \App\Models\Product::find(2);
+
+//    auth()->user()->comments()->create([
+//        'comment' => 'first comment',
+//        'commentable_id' => $product->id,
+//        //'commentable_type' => 'App\Product',
+//        'commentable_type' => get_class($product),
+//    ]);
+
+//    $product->comments()->create([
+//        'user_id' => auth()->user()->id,
+//        'comment' => 'second comment',
+//    ]);
+//
+//    dd($product->comments()->get());
+
+    $comment = \App\Models\Comment::find(2);
+    dd($comment->commentable);
+
+
    if(Gate::allows('edit-user')) {
        return view('welcome');
    }
