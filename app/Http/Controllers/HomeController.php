@@ -37,6 +37,8 @@ class HomeController extends Controller
             'comment' => 'required',
         ]);
 
+        //dd($validate_data);
+
        auth()->user()->comments()->create($validate_data);
 
        return back();
