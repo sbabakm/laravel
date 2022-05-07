@@ -9,8 +9,8 @@ class Comment extends Model
 {
     use HasFactory;
 
-   // protected $fillable = ['comment' , 'approved' , 'parent_id' , 'commentable_id' , 'commentable_type'];
-    protected $fillable = ['comment' , 'approved' , 'parent_id' , 'user_id'];
+    protected $fillable = ['comment' , 'approved' , 'parent_id' , 'commentable_id' , 'commentable_type'];
+    //protected $fillable = ['comment' , 'approved' , 'parent_id' , 'user_id'];
 
     public function user() {
         return $this->belongsTo(User::class);

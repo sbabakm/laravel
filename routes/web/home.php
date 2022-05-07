@@ -34,6 +34,7 @@ Route::get('/', function () {
 //    return $user->permissions()->get();
 
     auth()->loginUsingId(4);
+//    auth()->logout();
 
 //    dd(auth()->user()->activeCode);
 
@@ -53,8 +54,8 @@ Route::get('/', function () {
 //
 //    dd($product->comments()->get());
 
-    $comment = \App\Models\Comment::find(2);
-    dd($comment->commentable);
+//    $comment = \App\Models\Comment::find(2);
+//    dd($comment->commentable);
 
 
    if(Gate::allows('edit-user')) {
@@ -92,6 +93,7 @@ Route::middleware('auth')->group(function (){
 
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/product/{product}', [App\Http\Controllers\ProductController::class, 'single']);
+Route::post('comments' , [App\Http\Controllers\HomeController::class, 'comment'])->name('send.comment');
 
 //test
 Route::get('/babak/{x}/{z}',function ($y, $w) {

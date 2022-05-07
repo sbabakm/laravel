@@ -13,7 +13,8 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        //$this->middleware(['auth', 'verified']);
+        $this->middleware(['auth']);
     }
 
     /**
@@ -25,5 +26,20 @@ class HomeController extends Controller
     {
         //alert()->success('salam babak','Message')->persistent('OK');
         return view('home');
+    }
+
+    public function comment(Request $request) {
+
+       $validate_data =  $request->validate([
+            'commentable_id' => 'required',
+            'commentable_type' => 'required',
+            'parent_id' => 'required',
+            'comment' => 'required',
+        ]);
+
+       auth()->user()->comments()->create($validate_data);
+
+       return back();
+
     }
 }
