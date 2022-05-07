@@ -15,12 +15,88 @@
         });
 
 
-            @if (count($errors) > 0)
-                $(document).ready(function () {
-                    $('#sendComment').modal('show');
-                });
-            @endif
+        @if (count($errors) > 0)
+        $(document).ready(function () {
+            $('#sendComment').modal('show');
+        });
+        @endif
 
+        $("#submit").click(function () {
+
+            var commentable_id = $("#commentable_id").val();
+            var commentable_type = $("#commentable_type").val();
+            var parent_id = $("#parent_id").val();
+            var comment = $("#comment").val();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                }
+            });
+
+
+            $.ajax({
+            url: "{{ route('send.comment') }}",
+            type: 'POST',
+            data: {
+                commentable_id: commentable_id,
+                commentable_type: commentable_type,
+                parent_id: parent_id,
+                comment: comment,
+            },
+            success: function (data) {
+                $('#sendComment').modal('hide');
+                $("#comment").val(null);
+
+            },
+            error: function (error) {
+                //console.log(error);
+                $("#comment").addClass("is-invalid");
+                $("#comment_error_container").text("این فیلد اجباری می باشد");
+
+            }
+        });
+
+        });
+
+        /*
+
+        document.querySelector('#comment_form').addEventListener('submit' , function(event) {
+            event.preventDefault();
+            let target = event.target;
+
+            let data = {
+                commentable_id : target.querySelector('input[name="commentable_id"]').value,
+                commentable_type: target.querySelector('input[name="commentable_type"]').value,
+                parent_id: target.querySelector('input[name="parent_id"]').value,
+                comment: target.querySelector('textarea[name="comment"]').value
+            }
+
+            // if(data.comment.length < 2) {
+            //     console.error('pls enter comment more than 2 char');
+            //     return;
+            // }
+
+
+            $.ajaxSetup({
+                headers : {
+                    'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type' : 'application/json'
+                }
+            })
+
+
+            $.ajax({
+                type : 'POST',
+                url : '/comments',
+                data : JSON.stringify(data),
+                success : function(data) {
+                    console.log(data);
+                }
+            })
+        })
+
+        */
 
     </script>
 
@@ -46,7 +122,10 @@
                             </ul>
                         </div>
                     @endif
+                    {{--
                     <form action="{{ route('send.comment') }}" method="POST" id="comment_form">
+                    --}}
+                    <form id="comment_form">
                         @csrf
                         <div class="modal-body">
 
@@ -61,14 +140,20 @@
                                 @error('comment')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
-                                    </span>
+                                </span>
                                 @enderror
+
+                                <span class="invalid-feedback" role="alert">
+                                    <strong id="comment_error_container"></strong>
+                                </span>
+
                             </div>
 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">لغو</button>
-                            <button type="submit" class="btn btn-primary">ارسال نظر</button>
+{{--                            <button type="submit" class="btn btn-primary">ارسال نظر</button>--}}
+                                <button type="button" class="btn btn-primary" id="submit">ارسال نظر</button>
                         </div>
                     </form>
                 </div>
