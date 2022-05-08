@@ -33,8 +33,8 @@ Route::get('/', function () {
 //    $user = \App\Models\User::find(1);
 //    return $user->permissions()->get();
 
-    auth()->loginUsingId(4);
-//    auth()->logout();
+//    auth()->loginUsingId(1);
+    auth()->logout();
 
 //    dd(auth()->user()->activeCode);
 
@@ -93,6 +93,7 @@ Route::middleware('auth')->group(function (){
 
 Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']);
 Route::get('/product/{product}', [App\Http\Controllers\ProductController::class, 'single']);
+Route::get('/productV2/{product}', [App\Http\Controllers\ProductController::class, 'singleV2']);
 Route::post('comments' , [App\Http\Controllers\HomeController::class, 'comment'])->name('send.comment');
 
 //test

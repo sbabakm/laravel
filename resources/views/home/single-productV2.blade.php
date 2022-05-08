@@ -233,68 +233,7 @@
                 --}}
 
 
-                @foreach($product->comments()->where('parent_id' , 0)->get() as $comment)
-                {{--  @foreach($product->comments()->where('parent_id' , 0)->paginate(5) as $comment) --}}
-                        <div class="card mb-3 border  {{ ! $loop->first ? 'border-danger' : 'border-primary' }}">
-
-                                <div class="card-header d-flex justify-content-between">
-                                    <div class="commenter">
-                                        <span>{{ $comment->user->name }}</span>
-                                        <span class="text-muted">- {{ $comment->created_at }}</span>
-                                    </div>
-                                    @auth
-                                        <span class="btn btn-sm btn-primary" data-toggle="modal" data-target="#sendComment" data-id="{{ $comment->id }}"
-                                            data-type="reply-comment">پاسخ به نظر</span>
-                                    @endauth
-                                </div>
-
-                            <div class="card-body">
-
-                                {{ $comment->comment }}
-                                {{--
-                                @foreach($product->comments()->where('parent_id' , $comment->id)->get() as $childComment)
-                                --}}
-                                @foreach($comment->child as $childComment)
-                                    <div class="card mt-3">
-                                        <div class="card-header d-flex justify-content-between">
-                                            <div class="commenter">
-                                                <span>{{ $childComment->user->name }}</span>
-                                                <span class="text-muted">- {{ $childComment->created_at }}</span>
-                                            </div>
-                                            @auth
-                                                <span class="btn btn-sm btn-primary" data-toggle="modal" data-target="#sendComment" data-id="{{ $childComment->id }}"
-                                                      data-type="reply-comment">پاسخ به نظر</span>
-                                            @endauth
-                                        </div>
-
-                                        <div class="card-body">
-                                            {{ $childComment->comment }}
-                                            {{--
-                                            @foreach($product->comments()->where('parent_id' , $childComment->id)->get() as $grandChildComment)
-                                                <div class="card mt-3">
-                                                    <div class="card-header d-flex justify-content-between">
-                                                        <div class="commenter">
-                                                            <span>{{ $grandChildComment->user->name }}</span>
-                                                            <span class="text-muted">- {{ $grandChildComment->created_at }}</span>
-                                                        </div>
-                                                        @auth
-                                                            <span class="btn btn-sm btn-primary" data-toggle="modal" data-target="#sendComment" data-id="{{ $grandChildComment->id }}"
-                                                                  data-type="reply-comment">پاسخ به نظر</span>
-                                                        @endauth
-                                                    </div>
-
-                                                    <div class="card-body">
-                                                        {{ $grandChildComment->comment }}
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                            --}}
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                @endforeach
+               @include('layouts.comments',['comments' => $product->comments()->where('parent_id' , 0)->get()])
 
             </div>
         </div>

@@ -15,4 +15,8 @@ class ProductController extends Controller
     public function single(Product $product) {
         return view('home.single-product', compact('product'));
     }
+
+    public function singleV2(Product $product) {
+        return view('home.single-productV2', compact('product'));
+    }
 }

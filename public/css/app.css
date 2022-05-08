@@ -10517,3 +10517,7 @@ body {
 body {
   font-family: "Vazir", sans-serif !important;
 }
+
+.card-header {
+  background: #a9a9a9;
+}
