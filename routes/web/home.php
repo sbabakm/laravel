@@ -33,12 +33,12 @@ Route::get('/', function () {
 //    $user = \App\Models\User::find(1);
 //    return $user->permissions()->get();
 
-//    auth()->loginUsingId(1);
-    auth()->logout();
+    auth()->loginUsingId(1);
+//    auth()->logout();
 
 //    dd(auth()->user()->activeCode);
 
-    $product = \App\Models\Product::find(2);
+//    $product = \App\Models\Product::find(2);
 
 //    auth()->user()->comments()->create([
 //        'comment' => 'first comment',
@@ -57,6 +57,16 @@ Route::get('/', function () {
 //    $comment = \App\Models\Comment::find(2);
 //    dd($comment->commentable);
 
+//    dd(Carbon\Carbon::today());
+//    $current = Carbon\Carbon::now();
+//    dd($current->addDays(2));
+//    dd($current->toDateString());
+//    dd($current->toFormattedDateString());
+
+    //dd(\Morilog\Jalali\Jalalian::now());
+    //dd(jdate());
+    //dd(\Morilog\Jalali\Jalalian::now()->format('%A, %d %B %y'));
+    //dd(jdate()->format('%A, %d %B %y'));
 
    if(Gate::allows('edit-user')) {
        return view('welcome');

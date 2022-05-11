@@ -1,9 +1,9 @@
 @foreach($comments as $comment)
     <div class="card mb-3">
         <div class="card-header d-flex justify-content-between">
-            <div class="commenter">
+            <div class="commenter d-flex">
                 <span>{{ $comment->user->name }}</span>
-                <span class="text-muted">- {{ $comment->created_at }}</span>
+                <span class="text-muted">- {{ jdate($comment->created_at)->ago() }}</span>
             </div>
             @auth
                 <span class="btn btn-sm btn-primary" data-toggle="modal" data-target="#sendComment" data-id="{{ $comment->id }}"
