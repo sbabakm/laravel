@@ -33,7 +33,7 @@ Route::get('/', function () {
 //    $user = \App\Models\User::find(1);
 //    return $user->permissions()->get();
 
-    auth()->loginUsingId(1);
+    auth()->loginUsingId(7);
 //    auth()->logout();
 
 //    dd(auth()->user()->activeCode);
@@ -67,6 +67,8 @@ Route::get('/', function () {
     //dd(jdate());
     //dd(\Morilog\Jalali\Jalalian::now()->format('%A, %d %B %y'));
     //dd(jdate()->format('%A, %d %B %y'));
+
+//    dd(\App\Models\User::all()->pluck('id')->toArray());
 
    if(Gate::allows('edit-user')) {
        return view('welcome');

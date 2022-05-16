@@ -59,13 +59,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+
+        //dd($request->all());
+
        $validate_data = $request->validate([
            'name' => ['required', 'string', 'max:255'],
            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
            'password' => ['required', 'string', 'min:8', 'confirmed'],
+           'permissions' => ['array']
        ]);
 
-       $user = User::create($validate_data);
+       //$user = User::create($validate_data);
+       $user = User::create([
+           'name' => $validate_data['name'],
+           'email' => $validate_data['email'],
+           'password' => bcrypt($validate_data['password'])
+       ]);
+
+       $user->permissions()->sync($validate_data['permissions']);
 
         if($request->has('verify')) {
             $user->markEmailAsVerified();
@@ -128,6 +139,7 @@ class UserController extends Controller
         $validate_data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255',Rule::unique('users')->ignore($user->id)],
+            'permissions' => ['array']
         ]);
 
         if(! is_null($request->password)) {
@@ -150,6 +162,8 @@ class UserController extends Controller
                 'email' => $validate_data['email'],
             ]);
         }
+
+        $user->permissions()->sync($validate_data['permissions']);
 
 //        $user->update($validate_data);
 

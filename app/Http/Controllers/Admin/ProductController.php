@@ -18,7 +18,7 @@ class ProductController extends Controller
         $products = Product::query();
 
         if($keyword = request('search')) {
-            $products = $products->where('title' , 'LIKE' , "%{$keyword}%")->orWhere('id', $keyword);
+            $products->where('title' , 'LIKE' , "%{$keyword}%")->orWhere('id', $keyword);
         }
 
 

@@ -38,6 +38,14 @@
                             <input type="checkbox" name="verify" class="form-check-input" id="verify" @if($user->email_verified_at) checked @endif>
                             <label class="form-check-label" for="verify">اکانت فعال باشد</label>
                         </div>
+                        <div class="form-group">
+                            <label for="permission" class="col-sm-2 control-label">دسترسی</label>
+                            <select class="form-control" name="permissions[]" multiple>
+                                @foreach(\App\Models\Permission::all() as $permission)
+                                    <option value="{{ $permission->id }}" {{ in_array($permission->id , $user->permissions()->pluck('id')->toArray())  ? 'selected' : ''}}> {{ $permission->name }} </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">

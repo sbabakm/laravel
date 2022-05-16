@@ -16,15 +16,14 @@
                 <!-- form start -->
                 <form class="form-horizontal" action="{{ route('admin.users.store') }}" method="POST">
                     @csrf
-                    @method('DELETE')
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">نام کاربر</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="نام کاربر را وارد کنید">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="نام کاربر را وارد کنید" value="{{ old('name') }}">
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-sm-2 control-label">ایمیل</label>
-                            <input type="email" name="email" class="form-control" id="email" placeholder="ایمیل را وارد کنید">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="ایمیل را وارد کنید" value="{{ old('email') }}">
                         </div>
                         <div class="form-group">
                             <label for="password" class="col-sm-2 control-label">پسورد</label>
@@ -35,8 +34,16 @@
                             <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="پسورد را وارد کنید">
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" name="verify" class="form-check-input" id="verify">
+                            <input type="checkbox" name="verify" class="form-check-input" id="verify" {{ old('verify') ? 'checked' : 'unchecked' }}>
                             <label class="form-check-label" for="verify">اکانت فعال باشد</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="permission" class="col-sm-2 control-label">دسترسی</label>
+                            <select class="form-control" name="permissions[]" multiple>
+                                @foreach(\App\Models\Permission::all() as $permission)
+                                    <option value="{{ $permission->id }}"> {{ $permission->name }} </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <!-- /.card-body -->
