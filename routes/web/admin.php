@@ -22,6 +22,8 @@ Route::resource('comments' , CommentController::class )->only(['index','update',
 
 Route::get('comments/unapproved',[App\Http\Controllers\Admin\CommentController::class, 'unapprovedComments']);
 
+Route::resource('categories',CategoryController::class);
+
 
 
 

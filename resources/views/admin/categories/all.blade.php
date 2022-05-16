@@ -1,64 +1,113 @@
-@component('admin.layouts.content' , ['title' => 'لیست کاربران'])
+@component('admin.layouts.content' , ['title' => 'لیست دسته بندی ها'])
     @slot('breadcrumb')
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
-        <li class="breadcrumb-item active">لیست کاربران</li>
+        <li class="breadcrumb-item active">لیست دسته بندی ها</li>
     @endslot
 
     <div class="d-flex">
-        <a class="btn btn-sm btn-success mb-1 ml-1" href="{{ route('admin.users.create') }}">ایجاد کاربر جدید</a>
+        <a class="btn btn-sm btn-success mb-1 ml-1" href="{{ route('admin.categories.create') }}">ایجاد دسته جدید</a>
         <form action="">
             <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="search" class="form-control float-right" placeholder="جستجو" value="{{ request('search') }}">
+                <input type="text" name="search" class="form-control float-right" placeholder="جستجو"
+                       value="{{ request('search') }}">
 
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>
-        <a class="btn btn-sm btn-warning mb-1 mr-1" href="{{ request()->fullUrlWithQuery(['admin' => 1]) }}">کاربران مدیر</a>
     </div>
+    @include('admin.layouts.categories-group',['categories' => $categories])
+{{--    <ul class="list-group list-group-flush">--}}
+{{--        --}}
+{{--        <li class="list-group-item">--}}
+{{--            <div class="d-flex">--}}
+{{--                <span>test</span>--}}
+{{--                <div class="actions mr-2">--}}
+{{--                    <form action="" id="" method="POST">--}}
+{{--                        @csrf--}}
+{{--                        @method('delete')--}}
+{{--                    </form>--}}
+{{--                    <a href="#" class="badge badge-danger">حذف</a>--}}
+{{--                    <a href="#" class="badge badge-primary">ویرایش</a>--}}
+{{--                    <a href="#" class="badge badge-warning">ثبت زیر دسته</a>--}}
+{{--                </div>--}}
+{{--                <ul class="list-group list-group-flush">--}}
+{{--                    <li class="list-group-item">--}}
+{{--                        <div class="d-flex">--}}
+{{--                            <span>test2</span>--}}
+{{--                            <div class="actions mr-2">--}}
+{{--                                <form action="" id="" method="POST">--}}
+{{--                                    @csrf--}}
+{{--                                    @method('delete')--}}
+{{--                                </form>--}}
+{{--                                <a href="#" class="badge badge-danger">حذف</a>--}}
+{{--                                <a href="#" class="badge badge-primary">ویرایش</a>--}}
+{{--                                <a href="#" class="badge badge-warning">ثبت زیر دسته</a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                    <li class="list-group-item">--}}
+{{--                        <div class="d-flex">--}}
+{{--                            <span>test2</span>--}}
+{{--                            <div class="actions mr-2">--}}
+{{--                                <form action="" id="" method="POST">--}}
+{{--                                    @csrf--}}
+{{--                                    @method('delete')--}}
+{{--                                </form>--}}
+{{--                                <a href="#" class="badge badge-danger">حذف</a>--}}
+{{--                                <a href="#" class="badge badge-primary">ویرایش</a>--}}
+{{--                                <a href="#" class="badge badge-warning">ثبت زیر دسته</a>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
 
-    <table id="example2" class="table table-bordered table-hover dataTable" role="grid">
-        <thead>
-            <tr>
-                <th>آیدی کاربر</th>
-                <th>نام کاربر</th>
-                <th>ایمیل</th>
-                <th>وضعیت ایمیل</th>
-                <th>اقدامات</th>
-            </tr>
-        </thead>
-        <tbody>
+{{--        </li>--}}
+{{--        --}}
+{{--        @foreach($categories as $cate)--}}
+{{--            <li class="list-group-item">--}}
+{{--                <div class="d-flex">--}}
+{{--                    <span>{{ $cate->name }}</span>--}}
+{{--                    <div class="actions mr-2">--}}
+{{--                        <form action="" id="" method="POST">--}}
+{{--                            @csrf--}}
+{{--                            @method('delete')--}}
+{{--                        </form>--}}
+{{--                        <a href="#" class="badge badge-danger">حذف</a>--}}
+{{--                        <a href="#" class="badge badge-primary">ویرایش</a>--}}
+{{--                        <a href="#" class="badge badge-warning">ثبت زیر دسته</a>--}}
+{{--                    </div>--}}
+{{--                    @if($cate->child->count())--}}
+{{--                        <ul class="list-group list-group-flush">--}}
+{{--                            @foreach($cate->child as $childCate)--}}
+{{--                                <li class="list-group-item">--}}
+{{--                                    <div class="d-flex">--}}
+{{--                                        <span>{{ $childCate->name }}</span>--}}
+{{--                                        <div class="actions mr-2">--}}
+{{--                                            <form action="" id="" method="POST">--}}
+{{--                                                @csrf--}}
+{{--                                                @method('delete')--}}
+{{--                                            </form>--}}
+{{--                                            <a href="#" class="badge badge-danger">حذف</a>--}}
+{{--                                            <a href="#" class="badge badge-primary">ویرایش</a>--}}
+{{--                                            <a href="#" class="badge badge-warning">ثبت زیر دسته</a>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </li>--}}
+{{--                            @endforeach--}}
+{{--                        </ul>--}}
+{{--                    @endif--}}
 
-        @foreach($users as $user)
-            <tr>
-                <td>{{ $user->id }}</td>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
-                @if($user->email_verified_at)
-                    <td><span class="badge badge-success">فعال</span></td>
-                @else
-                    <td><span class="badge badge-danger">غیرفعال</span></td>
-                @endif
-                <td class="d-flex">
-                    {{--<a href="#" class="btn btn-sm btn-danger">حذف</a>--}}
-                    <form action="{{ route('admin.users.destroy' , $user) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-sm btn-danger">حذف</button>
-                    </form>
-                    @can('edit', $user)
-                        <a href="{{ route('admin.users.edit' , $user) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
-                    @endcan
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-{{--    <div class="card-footer">--}}
-{{--        {{ $users->render() }}--}}
-{{--    </div>--}}
+{{--                </div>--}}
+{{--            </li>--}}
+{{--        @endforeach--}}
+{{--    </ul>--}}
+
     <div class="d-flex justify-content-center">
-        {{$users->links("pagination::bootstrap-4") }}
+        {{--        {{ $categories->links("pagination::bootstrap-4") }}--}}
+        {{ $categories->withQueryString()->links("pagination::bootstrap-4") }}
+        {{--           {{ $categories->appends(['search' => request('search')])->links("pagination::bootstrap-4") }}--}}
     </div>
 @endcomponent

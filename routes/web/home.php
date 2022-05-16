@@ -70,6 +70,8 @@ Route::get('/', function () {
 
 //    dd(\App\Models\User::all()->pluck('id')->toArray());
 
+//    dd(\App\Models\Category::find(3)->child->count());
+
    if(Gate::allows('edit-user')) {
        return view('welcome');
    }
