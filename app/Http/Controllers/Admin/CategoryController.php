@@ -27,7 +27,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.create');
     }
 
     /**
@@ -38,7 +38,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate_date = $request->validate([
+            'name' => ['required'],
+            'parent' => ['required']
+        ]);
+
+        Category::create($validate_date);
+
+        return redirect(route('admin.categories.index'));
     }
 
     /**
@@ -60,7 +67,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit',compact('category'));
     }
 
     /**
@@ -72,7 +79,22 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        if($request['parent']) {
+          $validate_date = $request->validate([
+                'name' => ['required'],
+                'parent' => ['required' , 'exists:categories,id']
+            ]);
+        }
+        else {
+          $validate_date = $request->validate([
+                'name' => ['required'],
+            ]);
+        }
+
+        $category->update($validate_date);
+
+        return redirect(route('admin.categories.index'));
+
     }
 
     /**
@@ -83,6 +105,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+//        foreach ($category->child as $cate) {
+//            $this->destroy($cate->child);
+//        }
+        $category->delete();
+        return back();
     }
 }
