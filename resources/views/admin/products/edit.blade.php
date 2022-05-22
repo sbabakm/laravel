@@ -5,6 +5,14 @@
         <li class="breadcrumb-item active">ویرایش محصول</li>
     @endslot
 
+    @slot('script')
+        <script>
+            $('#categories').select2({
+                'placeholder' : 'دسترسی مورد نظر را انتخاب کنید'
+            });
+        </script>
+    @endslot
+
     <div class="row">
         <div class="col-lg-12">
             @include('admin.layouts.errors')
@@ -35,6 +43,14 @@
                         <div class="form-group">
                             <label for="inventory" class="col-sm-2 control-label">موجودی</label>
                             <input type="number" name="inventory" class="form-control" id="inventory" placeholder="موجودی را وارد کنید" value="{{ old('inventory', $product->inventory) }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="categories" class="col-sm-2 control-label">دسته ها</label>
+                            <select name="categories[]" class="form-control" id="categories" multiple>
+                                @foreach(\App\Models\Category::all() as $cate)
+                                    <option value="{{ $cate->id }}" {{ in_array($cate->id , $product->categories()->pluck('id')->toArray()) ? 'selected' : '' }}>{{ $cate->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <!-- /.card-body -->

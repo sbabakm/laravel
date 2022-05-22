@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="/plugins/iCheck/flat/blue.css">
     <!-- Morris chart -->
     <link rel="stylesheet" href="/plugins/morris/morris.css">
+
+    <link rel="stylesheet" href="/plugins/select2/select2.css">
     <!-- jvectormap -->
     <link rel="stylesheet" href="/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
     <!-- Date Picker -->
@@ -91,15 +93,20 @@
 <script src="/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="/plugins/fastclick/fastclick.js"></script>
+
+<script src="/plugins/select2/select2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
 <!-- AdminLTE App -->
 {{--<script src="/dist/js/adminlte.js"></script>--}}
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 {{--<script src="/dist/js/pages/dashboard.js"></script>--}}
 <!-- AdminLTE for demo purposes -->
 {{--<script src="/dist/js/demo.js"></script>--}}
-
+@yield('script')
 <script src="{{ asset('js/admin.js') }}"></script>
 <script src="{{ asset('/js/app.js') }}"></script>
 @include('sweet::alert')
+
 </body>
 </html>

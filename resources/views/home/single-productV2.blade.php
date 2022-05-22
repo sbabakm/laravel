@@ -181,6 +181,10 @@
 
                     <div class="card-body">
                         {{ $product->description }}
+                        <br>
+                        @foreach($product->categories as $cate)
+                            <a href="#">{{ $cate->name }}</a>
+                        @endforeach
                     </div>
                 </div>
             </div>
