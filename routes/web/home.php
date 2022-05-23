@@ -72,6 +72,20 @@ Route::get('/', function () {
 
 //    dd(\App\Models\Category::find(3)->child->count());
 
+//    collect([1,2,3,4])->each(function ($item){
+//        if ($item === 2) {
+//            return true;
+//        }
+//        echo $item;
+//    });
+
+//    collect([1,2,3,4])->each(function ($item){
+//        if ($item === 2) {
+//            return false;
+//        }
+//        echo $item;
+//    });
+
    if(Gate::allows('edit-user')) {
        return view('welcome');
    }

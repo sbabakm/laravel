@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Attribute;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -48,17 +49,38 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+
         $validate_data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required'],
             'price' => ['required'],
             'inventory' => ['required'],
-            'categories' => ['array']
+            'categories' => ['array'],
+            'attributes' => ['array']
         ]);
 
         $product = auth()->user()->products()->create($validate_data);
 
         $product->categories()->sync($validate_data['categories']);
+
+        $attributes = collect($validate_data['attributes']);
+
+        $attributes->each(function ($item) use ($product) {
+
+            if(is_null($item['name']) || is_null($item['value']))
+                return true;//continue
+
+            $attr = Attribute::firstOrCreate([
+                'name' => $item['name']
+            ]);
+
+            $value = $attr->values()->firstOrCreate([
+                'value' => $item['value']
+            ]);
+
+            $product->attributes()->attach($attr->id , ['value_id' => $value->id]);
+
+        });
 
         return redirect(route('admin.products.index'));
     }
