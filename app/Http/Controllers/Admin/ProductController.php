@@ -93,6 +93,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        //dd($product->attributes->toArray());
+        //$temp = $product->attributes->toArray();
+        //dd($temp);
+        //dd($temp[0]['pivot']);
+
         return view('admin.products.edit', compact('product'));
     }
 
@@ -110,11 +115,33 @@ class ProductController extends Controller
             'description' => ['required'],
             'price' => ['required'],
             'inventory' => ['required'],
-            'categories' => ['array']
+            'categories' => ['array'],
+            'attributes' => ['array']
         ]);
 
         $product->update($validate_data);
         $product->categories()->sync($validate_data['categories']);
+
+        $attributes = collect($validate_data['attributes']);
+
+        $product->attributes()->detach();
+
+        $attributes->each(function ($item) use ($product) {
+
+            if(is_null($item['name']) || is_null($item['value']))
+                return true;//continue
+
+            $attr = Attribute::firstOrCreate([
+                'name' => $item['name']
+            ]);
+
+            $value = $attr->values()->firstOrCreate([
+                'value' => $item['value']
+            ]);
+
+            $product->attributes()->attach($attr->id , ['value_id' => $value->id]);
+
+        });
 
         return redirect(route('admin.products.index'));
 
