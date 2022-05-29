@@ -81,10 +81,11 @@
             $('#add_product_attribute').click(function() {
                 let attributesSection = $('#attribute_section');
                 let id = attributesSection.children().length;
+                let attributes = $('#attributes').data('type');
 
                 attributesSection.append(
                     createNewAttr({
-                        attributes : [],
+                        attributes,
                         id
                     })
                 );
@@ -103,6 +104,7 @@
                     <h3 class="card-title">فرم ایجاد محصول</h3>
                 </div>
                 <!-- /.card-header -->
+                <div id="attributes" data-type="{{ \App\Models\Attribute::all()->pluck('name') }}"></div>
                 <!-- form start -->
                 <form class="form-horizontal" action="{{ route('admin.products.store') }}" method="POST">
                     @csrf

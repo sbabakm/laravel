@@ -18,6 +18,8 @@ Route::resource('roles', RoleController::class);
 
 Route::resource('products', ProductController::class)->except('show');
 
+Route::post('/attribute/values', [App\Http\Controllers\Admin\AttributeController::class, 'getValues'] );
+
 Route::resource('comments' , CommentController::class )->only(['index','update','destroy']);
 
 Route::get('comments/unapproved',[App\Http\Controllers\Admin\CommentController::class, 'unapprovedComments']);
