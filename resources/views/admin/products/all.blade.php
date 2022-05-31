@@ -63,4 +63,17 @@
         {{ $products->withQueryString()->links("pagination::bootstrap-4") }}
 {{--        {{ $products->appends(['search' => request('search')])->links("pagination::bootstrap-4") }}--}}
     </div>
+
+    <div class="btn btn-success">{{ $products->lastPage() }}</div>
+    <div class="btn btn-success">{{ $products->firstItem() }}</div>
+    <div class="btn btn-success">{{ $products->lastItem() }}</div>
+    <div class="btn btn-success">{{ $products->nextPageUrl() }}</div>
+    <div class="btn btn-success">{{ $products->perPage() }}</div>
+    <div class="btn btn-success">{{ $products->total() }}</div>
+    <div class="btn btn-success">{{ $products->count() }}</div>
+    <div class="btn btn-success">{{ $products->url(2) }}</div>
+    <div class="btn btn-success">{{ $products->url($products->lastPage()) }}</div>
+    @foreach($products->items() as $item)
+        <div>{{ $item->id }}</div>
+    @endforeach
 @endcomponent

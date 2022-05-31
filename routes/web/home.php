@@ -91,7 +91,7 @@ Route::get('/', function () {
 
 //    dd(Cart::get(55));
 
-    dd(session()->get('cart'));
+//    dd(session()->get('cart'));
 
    if(Gate::allows('edit-user')) {
        return view('welcome');

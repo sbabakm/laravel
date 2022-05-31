@@ -27,6 +27,8 @@ class ProductController extends Controller
         //$products = $products->latest()->paginate(12);
         $products = $products->orderBy('id','desc')->paginate(12);
 
+        //return $products;
+
         return view('admin.products.all' , compact('products'));
 
     }
