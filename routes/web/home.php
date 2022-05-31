@@ -86,6 +86,11 @@ Route::get('/', function () {
 //        echo $item;
 //    });
 
+//    $temp = new App\Helpers\Cart\CartService();
+//    dd($temp->get(33));
+
+    dd(Cart::get(55));
+
    if(Gate::allows('edit-user')) {
        return view('welcome');
    }
