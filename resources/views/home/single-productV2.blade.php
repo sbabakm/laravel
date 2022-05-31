@@ -175,8 +175,12 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between">
                         {{ $product->title }}
+                        <form action="{{ route('cart.add' , $product) }}" method="POST" id="add-product-to-cart-form">
+                            @csrf
+                        </form>
+                        <span class="btn btn-sm btn-danger" onclick="document.getElementById('add-product-to-cart-form').submit();">افزودن به سبد خرید</span>
                     </div>
 
                     <div class="card-body">

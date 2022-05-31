@@ -89,7 +89,9 @@ Route::get('/', function () {
 //    $temp = new App\Helpers\Cart\CartService();
 //    dd($temp->get(33));
 
-    dd(Cart::get(55));
+//    dd(Cart::get(55));
+
+    dd(session()->get('cart'));
 
    if(Gate::allows('edit-user')) {
        return view('welcome');
@@ -128,6 +130,8 @@ Route::get('/products', [App\Http\Controllers\ProductController::class, 'index']
 Route::get('/product/{product}', [App\Http\Controllers\ProductController::class, 'single']);
 Route::get('/productV2/{product}', [App\Http\Controllers\ProductController::class, 'singleV2']);
 Route::post('comments' , [App\Http\Controllers\HomeController::class, 'comment'])->name('send.comment');
+
+Route::post('/cart/add/{product}', [App\Http\Controllers\CartController::class, 'addProductToCart'])->name('cart.add');
 
 //test
 Route::get('/babak/{x}/{z}',function ($y, $w) {
