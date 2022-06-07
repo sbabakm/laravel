@@ -10,7 +10,7 @@ class CartController extends Controller
 {
     public function addProductToCart(Product $product)
     {
-        dd(Cart::has());
+        dd(Cart::all());
         if(! Cart::has($product)) {
             Cart::put(
                 [
