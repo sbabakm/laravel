@@ -46,4 +46,18 @@ class CartService
         return  $this->cart->where('id' , $key)->first();
 
     }
+
+    public function get($key) {
+
+        if($key instanceof Model) {
+            return $this->cart->where('subject_id' , $key->id)->where('subject_type' , get_class($key))->first();
+        }
+
+        return  $this->cart->where('id' , $key)->first();
+    }
+
+    public function all() {
+        return $this->cart;
+    }
+
 }
