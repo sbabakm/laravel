@@ -52,35 +52,38 @@ class CartService
 
         if($key instanceof Model) {
             $item = $this->cart->where('subject_id' , $key->id)->where('subject_type' , get_class($key))->first();
-//            $item['product'] = [
-//                $key->toArray()
-//            ];
-            $item['product'] = [
-                'title' => $key->title,
-                'price' => $key->price,
-                'inventory' => $key->inventory,
-            ];
-            return $item;
+        }
+        else {
+            $item = $this->cart->where('id' , $key)->first();
         }
 
-        return  $this->cart->where('id' , $key)->first();
+        return $this->withRelationshipIfExist($item);
     }
 
     public function all() {
-       // return $this->cart;
+
         $result = $this->cart->map(function ($item, $key) {
-            if(isset($item['subject_id']) && isset($item['subject_type'])) {
-                $product = Product::find($item['subject_id']);
-                $item['product'] = [
-                    'title' => $product->title,
-                    'price' => $product->price,
-                    'inventory' => $product->inventory,
-                ];
-            }
-            return $item;
+            return $this->withRelationshipIfExist($item);
         });
 
         return $result;
+    }
+
+    public function withRelationshipIfExist($item) {
+
+        if(isset($item['subject_id']) && isset($item['subject_type'])) {
+
+            $class = $item['subject_type'];
+            $subject = (new $class())->find($item['subject_id']);
+
+            unset($item['subject_id']);
+            unset($item['subject_type']);
+
+            $item[strtolower(class_basename($class))] = $subject;
+
+
+        }
+        return $item;
     }
 
 }
