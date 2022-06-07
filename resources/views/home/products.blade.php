@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="card-footer">
-                        <a class="btn btn-danger" href="/product/{{ $product->id }}">جزئیات محصول</a>
+                        <a class="btn btn-danger" href="/productV2/{{ $product->id }}">جزئیات محصول</a>
                     </div>
 
                 </div>

@@ -137,4 +137,8 @@ Route::post('/cart/add/{product}', [App\Http\Controllers\CartController::class, 
 Route::get('/babak/{x}/{z}',function ($y, $w) {
     return ' salam ' . $y . ' ' . $w;
 })->name('bbk');
+Route::get('show/session',function (){
+   //return session()->get('cart');
+    dd(session()->get('cart'));
+});
 

@@ -14,6 +14,7 @@ class CartService
     public function __construct()
     {
         $this->cart = session()->get('cart') ?? collect([]);
+        //dd('test when constructor call');
     }
 
 
@@ -31,9 +32,18 @@ class CartService
             ]);
         }
 
-        $this->cart->put($value['id'] , $value);
-        session()->put('cart' , $this->cart);
+        $this->cart->put($value['id'] , $value);//put is collection method
+        session()->put('cart' , $this->cart);//put is session method
 
         return $this;
+    }
+
+    public function has($key) {
+
+        if($key instanceof Model) {
+           return  $this->cart->where('subject_id' , $key->id)->where('subject_type' , get_class($key))->first();
+        }
+        return  $this->cart->where('id' , $key)->first();
+
     }
 }
