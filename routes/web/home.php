@@ -132,6 +132,7 @@ Route::get('/productV2/{product}', [App\Http\Controllers\ProductController::clas
 Route::post('comments' , [App\Http\Controllers\HomeController::class, 'comment'])->name('send.comment');
 
 Route::post('/cart/add/{product}', [App\Http\Controllers\CartController::class, 'addProductToCart'])->name('cart.add');
+Route::get('/show/cart', [App\Http\Controllers\CartController::class, 'showCart']);
 
 //test
 Route::get('/babak/{x}/{z}',function ($y, $w) {
@@ -139,6 +140,7 @@ Route::get('/babak/{x}/{z}',function ($y, $w) {
 })->name('bbk');
 Route::get('show/session',function (){
    //return session()->get('cart');
-    dd(session()->get('cart'));
+    //dd(session()->get('cart'));
+    dd(Cart::all());
 });
 

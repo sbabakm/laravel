@@ -10,17 +10,20 @@ class CartController extends Controller
 {
     public function addProductToCart(Product $product)
     {
-        dd(Cart::all());
+
         if(! Cart::has($product)) {
             Cart::put(
                 [
                     'quantity' => 2,
-                    'price' => $product->price
+                    //'price' => $product->price
                 ],
                 $product
             );
         }
 
         return 'ok';
+    }
+    public function showCart() {
+        return view('home.cart');
     }
 }
