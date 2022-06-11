@@ -27,7 +27,7 @@ class CartService
                 'subject_id' => $obj->id,
                 'subject_type' => get_class($obj)
             ]);
-        } else {
+        } elseif(! isset($value['id'])) {
             $value = array_merge($value , [
                 'id' => Str::random(10)
             ]);
@@ -39,25 +39,40 @@ class CartService
         return $this;
     }
 
-    public function update($key) {
+//    public function update($key) {
+//
+//        if($key instanceof Model) {
+//
+//          $item = $this->get($key);
+//          if($item['quantity'] < $item['product']->inventory) {
+//
+//              $item['quantity']++;
+//              $this->cart->put($item['id'] , $item);//put is collection method
+//
+//              session()->put('cart' , $this->cart);//put is session method
+//
+//          }
+//
+//        }
+//        else {
+//
+//        }
+//
+//    }
 
-        if($key instanceof Model) {
+    public function update($key , $options)
+    {
+        $item = collect($this->get($key, false));
 
-          $item = $this->get($key);
-          if($item['quantity'] < $item['product']->inventory) {
-
-              $item['quantity']++;
-              $this->cart->put($item['id'] , $item);//put is collection method
-
-              session()->put('cart' , $this->cart);//put is session method
-
-          }
-
+        if(is_numeric($options)) {
+            $item = $item->merge([
+                'quantity' => $item['quantity'] + $options
+            ]);
         }
-        else {
 
-        }
+        $this->put($item->toArray());
 
+        return $this;
     }
 
     public function has($key) {
@@ -105,6 +120,13 @@ class CartService
 
         }
         return $item;
+    }
+
+    public function count($key) {
+
+        if(! $this->has($key) ) return 0;
+
+        return $this->get($key)['quantity'];
     }
 
 }

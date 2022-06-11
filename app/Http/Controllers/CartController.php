@@ -21,7 +21,9 @@ class CartController extends Controller
             );
         }
         else {
-            Cart::update($product);
+            if(Cart::count($product) < $product->inventory) {
+                Cart::update($product , 1);
+            }
         }
 
         return 'ok';
