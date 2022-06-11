@@ -14,11 +14,14 @@ class CartController extends Controller
         if(! Cart::has($product)) {
             Cart::put(
                 [
-                    'quantity' => 2,
+                    'quantity' => 1,
                     //'price' => $product->price
                 ],
                 $product
             );
+        }
+        else {
+            Cart::update($product);
         }
 
         return 'ok';

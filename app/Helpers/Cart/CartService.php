@@ -39,6 +39,27 @@ class CartService
         return $this;
     }
 
+    public function update($key) {
+
+        if($key instanceof Model) {
+
+          $item = $this->get($key);
+          if($item['quantity'] < $item['product']->inventory) {
+
+              $item['quantity']++;
+              $this->cart->put($item['id'] , $item);//put is collection method
+
+              session()->put('cart' , $this->cart);//put is session method
+
+          }
+
+        }
+        else {
+
+        }
+
+    }
+
     public function has($key) {
 
         if($key instanceof Model) {
@@ -76,8 +97,8 @@ class CartService
             $class = $item['subject_type'];
             $subject = (new $class())->find($item['subject_id']);
 
-            unset($item['subject_id']);
-            unset($item['subject_type']);
+            //unset($item['subject_id']);
+            //unset($item['subject_type']);
 
             $item[strtolower(class_basename($class))] = $subject;
 
