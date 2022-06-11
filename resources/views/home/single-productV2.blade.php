@@ -180,7 +180,25 @@
                         <form action="{{ route('cart.add' , $product) }}" method="POST" id="add-product-to-cart-form">
                             @csrf
                         </form>
-                        <span class="btn btn-sm btn-danger" onclick="document.getElementById('add-product-to-cart-form').submit();">افزودن به سبد خرید</span>
+
+                        @php
+                            if (\App\Helpers\Cart\Cart::has($product)) {
+                                $item = \App\Helpers\Cart\Cart::get($product);
+                                $quantity = $item['quantity'];
+                            }
+                            //dd($quantity);
+                        @endphp
+
+                        <button class="btn btn-sm btn-danger" onclick="document.getElementById('add-product-to-cart-form').submit();" @if($quantity == $product->inventory) disabled="disabled" @endif>
+                            افزودن به سبد خرید
+                        </button>
+
+                        @if($quantity == $product->inventory)
+                            <span>
+                                موجودی محصول به اتمام رسیده است
+                            </span>
+                        @endif
+
                     </div>
 
                     <div class="card-body">
