@@ -65,9 +65,15 @@ class CartService
         $item = collect($this->get($key, false));
 
         if(is_numeric($options)) {
+
             $item = $item->merge([
                 'quantity' => $item['quantity'] + $options
             ]);
+
+        }
+
+        if(is_array($options)) {
+            $item = $item->merge($options);
         }
 
         $this->put($item->toArray());

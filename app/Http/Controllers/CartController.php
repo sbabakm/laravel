@@ -28,7 +28,28 @@ class CartController extends Controller
 
         return 'ok';
     }
+
     public function showCart() {
         return view('home.cart');
+    }
+
+    public function quantityChange(Request $request) {
+
+        //Cart::update($request['cart_id'] , $request['quantity']);
+        $data = $request->validate([
+            'quantity' => 'required',
+            'id' => 'required',
+//           'cart' => 'required'
+        ]);
+
+        if( Cart::has($data['id']) ) {
+            Cart::update($data['id'] , [
+                'quantity' => $data['quantity']
+            ]);
+
+            return response(['status' => 'success']);
+        }
+
+        return response(['status' => 'error'] , 404);
     }
 }

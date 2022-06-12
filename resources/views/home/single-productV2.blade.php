@@ -189,14 +189,21 @@
                             //dd($quantity);
                         @endphp
 
-                        <button class="btn btn-sm btn-danger" onclick="document.getElementById('add-product-to-cart-form').submit();" @if($quantity == $product->inventory) disabled="disabled" @endif>
+                        <button class="btn btn-sm btn-danger" onclick="document.getElementById('add-product-to-cart-form').submit();"
+                                @if(\App\Helpers\Cart\Cart::has($product))
+                                    @if($quantity == $product->inventory)
+                                      disabled="disabled"
+                                    @endif
+                                @endif
+                        >
                             افزودن به سبد خرید
                         </button>
-
-                        @if($quantity == $product->inventory)
-                            <span>
-                                موجودی محصول به اتمام رسیده است
-                            </span>
+                        @if(\App\Helpers\Cart\Cart::has($product))
+                             @if($quantity == $product->inventory)
+                                 <span>
+                                       موجودی محصول به اتمام رسیده است
+                                 </span>
+                             @endif
                         @endif
 
                     </div>
