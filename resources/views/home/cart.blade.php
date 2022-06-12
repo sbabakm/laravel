@@ -91,9 +91,12 @@
                                 </td>
                                 <td class="text-right font-weight-semibold align-middle p-4">
                                     تومان {{ $cart['product']->price * $cart['quantity'] }}</td>
-                                <td class="text-center align-middle px-0"><a href="#"
-                                                                             class="shop-tooltip close float-none text-danger"
-                                                                             title="" data-original-title="Remove">×</a>
+                                <td class="text-center align-middle px-0">
+                                    <form action="{{ route('cart.delete.item' , $cart['id']) }}" method="POST" id="form-delete-{{ $cart['id'] }}">
+                                        @csrf
+                                        @method('delete')
+                                    </form>
+                                    <a href="#" class="shop-tooltip close float-none text-danger" onclick="document.getElementById('form-delete-{{ $cart['id'] }}').submit();">×</a>
                                 </td>
                             </tr>
                         @endforeach

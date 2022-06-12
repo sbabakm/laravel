@@ -135,4 +135,15 @@ class CartService
         return $this->get($key)['quantity'];
     }
 
+    public function delete($id) {
+
+        $this->cart = $this->cart->filter(function ($value, $key) use ($id){
+            return $value['id'] != $id;
+        });
+
+        session()->put('cart' , $this->cart);//put is session method
+
+
+    }
+
 }
