@@ -6,6 +6,7 @@ namespace App\Helpers\Cart;
 
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
 
 class CartService
@@ -17,7 +18,8 @@ class CartService
     public function __construct()
     {
         //$this->cart = session()->get('cart') ?? collect([]);
-        $this->cart = session()->get($this->name) ?? collect([]);
+        //$this->cart = session()->get($this->name) ?? collect([]);
+        $this->cart = collect(json_decode(request()->cookie($this->name) , true))  ?? collect([]);
 
         //dd('test when constructor call');
     }
@@ -38,7 +40,10 @@ class CartService
 
         $this->cart->put($value['id'] , $value);//put is collection method
         //session()->put('cart' , $this->cart);//put is session method
-        session()->put($this->name , $this->cart);//put is session method
+        //session()->put($this->name , $this->cart);//put is session method
+
+        //cookie()->queue(cookie($this->name , $this->cart->toJson() , 60));
+        Cookie::queue($this->name , $this->cart->toJson() , 60);
 
         return $this;
     }
@@ -146,13 +151,16 @@ class CartService
         });
 
         //session()->put('cart' , $this->cart);//put is session method
-        session()->put($this->name , $this->cart);//put is session method
+        //session()->put($this->name , $this->cart);//put is session method
 
+        //cookie()->queue(cookie($this->name , $this->cart->toJson() , 60));
+        Cookie::queue($this->name , $this->cart->toJson() , 60);
 
     }
 
     public function instance($name) {
-        $this->cart = session()->get($name) ?? collect([]);
+        //$this->cart = session()->get($name) ?? collect([]);
+        $this->cart = collect(json_decode(request()->cookie($name) , true))  ?? collect([]);
         $this->name = $name;
         return $this;
     }

@@ -149,4 +149,11 @@ Route::get('show/session',function (){
 
     dd(session()->all());
 });
+Route::get('show/cookie',function (){
+    //dd(\App\Helpers\Cart\Cart::instance('roocket')->all());
+    //dd(request()->cookie('roocket'));
+    //dd(json_decode(request()->cookie('roocket')));
+    //dd(json_decode(request()->cookie('roocket') , true));
+    dd(request()->cookie());
+});
 
