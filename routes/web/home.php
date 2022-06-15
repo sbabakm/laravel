@@ -146,7 +146,7 @@ Route::get('show/session',function (){
     //dd(session()->get('cart'));
 
     //dd(Cart::all());
-
+//    session()->flush();
     dd(session()->all());
 });
 Route::get('show/cookie',function (){
