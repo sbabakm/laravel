@@ -8,7 +8,7 @@
             //alert($(this).data('id'));
             var id = $(this).data('id');
             var quantity = this.value;
-            var cart_name = 'default';
+            var cart_name = 'roocket';
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
@@ -63,7 +63,8 @@
                         </thead>
                         <tbody>
 
-                        @foreach(\App\Helpers\Cart\Cart::all() as $cart)
+{{--                        @foreach(\App\Helpers\Cart\Cart::all() as $cart)--}}
+                        @foreach(\App\Helpers\Cart\Cart::instance('roocket')->all() as $cart)
                             <tr>
                                 <td class="p-4">
                                     <div class="media align-items-center">

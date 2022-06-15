@@ -12,12 +12,15 @@ class CartService
 {
     protected $cart;
 
+    protected $name = 'default';
+
     public function __construct()
     {
-        $this->cart = session()->get('cart') ?? collect([]);
+        //$this->cart = session()->get('cart') ?? collect([]);
+        $this->cart = session()->get($this->name) ?? collect([]);
+
         //dd('test when constructor call');
     }
-
 
     public function put(array $value , $obj = null)
     {
@@ -34,7 +37,8 @@ class CartService
         }
 
         $this->cart->put($value['id'] , $value);//put is collection method
-        session()->put('cart' , $this->cart);//put is session method
+        //session()->put('cart' , $this->cart);//put is session method
+        session()->put($this->name , $this->cart);//put is session method
 
         return $this;
     }
@@ -141,9 +145,16 @@ class CartService
             return $value['id'] != $id;
         });
 
-        session()->put('cart' , $this->cart);//put is session method
+        //session()->put('cart' , $this->cart);//put is session method
+        session()->put($this->name , $this->cart);//put is session method
 
 
+    }
+
+    public function instance($name) {
+        $this->cart = session()->get($name) ?? collect([]);
+        $this->name = $name;
+        return $this;
     }
 
 }

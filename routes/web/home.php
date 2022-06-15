@@ -33,7 +33,7 @@ Route::get('/', function () {
 //    $user = \App\Models\User::find(1);
 //    return $user->permissions()->get();
 
-    auth()->loginUsingId(7);
+    auth()->loginUsingId(1);
 //    auth()->logout();
 
 //    dd(auth()->user()->activeCode);
@@ -133,6 +133,7 @@ Route::post('comments' , [App\Http\Controllers\HomeController::class, 'comment']
 
 Route::post('/cart/add/{product}', [App\Http\Controllers\CartController::class, 'addProductToCart'])->name('cart.add');
 Route::get('/show/cart', [App\Http\Controllers\CartController::class, 'showCart']);
+Route::get('/show/cart2', [App\Http\Controllers\CartController::class, 'showCart2']);
 Route::patch('/cart/quantity/change', [App\Http\Controllers\CartController::class, 'quantityChange'] )->name('cart.quantity.change');
 Route::delete('/cart/delete/{id}', [App\Http\Controllers\CartController::class, 'deleteItemFromCart'] )->name('cart.delete.item');
 
@@ -143,6 +144,9 @@ Route::get('/babak/{x}/{z}',function ($y, $w) {
 Route::get('show/session',function (){
    //return session()->get('cart');
     //dd(session()->get('cart'));
-    dd(Cart::all());
+
+    //dd(Cart::all());
+
+    dd(session()->all());
 });
 
