@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->BigInteger('price');
-            $table->enum('status' , ['unpiad' , 'paid' , 'preparation' , 'posted' , 'received' , 'canceled']);
+            $table->enum('status' , ['unpaid' , 'paid' , 'preparation' , 'posted' , 'received' , 'canceled']);
             $table->string('tracking_serial')->nullable();
 
             $table->timestamps();

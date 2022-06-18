@@ -8,7 +8,7 @@
             //alert($(this).data('id'));
             var id = $(this).data('id');
             var quantity = this.value;
-            var cart_name = 'default';
+            var cart_name = 'roocket';
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
@@ -125,7 +125,10 @@
                 </div>
 
                 <div class="float-left">
-                    <button type="button" class="btn btn-lg btn-primary mt-2">پرداخت</button>
+                    <form action="{{ route('save.order') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-lg btn-primary mt-2">پرداخت</button>
+                    </form>
                 </div>
 
             </div>
