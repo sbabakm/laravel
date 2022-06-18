@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    public function saveOrder()
+    public function payment()
     {
         //dd(Cart::instance('roocket')->all());
         $cart = Cart::instance('roocket')->all();

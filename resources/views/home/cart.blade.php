@@ -125,7 +125,7 @@
                 </div>
 
                 <div class="float-left">
-                    <form action="{{ route('save.order') }}" method="POST">
+                    <form action="{{ route('cart.payment') }}" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-lg btn-primary mt-2">پرداخت</button>
                     </form>

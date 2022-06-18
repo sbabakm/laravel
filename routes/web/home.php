@@ -137,7 +137,7 @@ Route::get('/show/cart2', [App\Http\Controllers\CartController::class, 'showCart
 Route::patch('/cart/quantity/change', [App\Http\Controllers\CartController::class, 'quantityChange'] )->name('cart.quantity.change');
 Route::delete('/cart/delete/{id}', [App\Http\Controllers\CartController::class, 'deleteItemFromCart'] )->name('cart.delete.item');
 
-Route::post('/order/save', [App\Http\Controllers\PaymentController::class, 'saveOrder'] )->name('save.order');
+Route::post('payment' , [App\Http\Controllers\PaymentController::class, 'payment'])->name('cart.payment');
 
 //test
 Route::get('/babak/{x}/{z}',function ($y, $w) {
