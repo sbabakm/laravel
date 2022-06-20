@@ -158,6 +158,12 @@ class CartService
 
     }
 
+    public function flush() {
+        $this->cart = collect([]);
+        Cookie::queue($this->name , $this->cart->toJson() , 60);
+        return $this;
+    }
+
     public function instance($name) {
         //$this->cart = session()->get($name) ?? collect([]);
         $this->cart = collect(json_decode(request()->cookie($name) , true))  ?? collect([]);
