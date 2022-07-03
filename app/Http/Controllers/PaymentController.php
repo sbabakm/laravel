@@ -6,6 +6,9 @@ use App\Helpers\Cart\Cart;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Shetabit\Multipay\Exceptions\InvalidPaymentException;
+use Shetabit\Multipay\Invoice;
+use Shetabit\Payment\Facade\Payment as ShetabitPayment;
 
 class PaymentController extends Controller
 {
@@ -69,56 +72,103 @@ class PaymentController extends Controller
 
             // 5- create payment record
 
-            $order->payments()->create([
-                'resnumber' => $res_number,
-                'price' => $totalPrice
-            ]);
+//            $order->payments()->create([
+//                'resnumber' => $res_number,
+//                'price' => $totalPrice
+//            ]);
 
             // 6- clear Sabad Kharid
 
-            $cart->flush();
+//            $cart->flush();
 
             // 7- redirect to Dargah Pardakht
 
 //            return redirect($payment->getPayUrl());
 
-            return 'ok';
+
+            // 4- Connect to Dargah Pardakht
+            // 5- create payment record
+            // 6- clear Sabad Kharid
+            // 7- redirect to Dargah Pardakht
+            $invoice = (new Invoice)->amount(1000);
+
+            return ShetabitPayment::callbackUrl(route('payment.callback'))->purchase($invoice, function($driver, $transactionId) use ($order, $cart,$invoice) {
+
+                $order->payments()->create([
+//                    'resnumber' => $invoice->getUuid(),
+                      'resnumber' => $transactionId,
+                ]);
+
+                $cart->flush();
+
+            })->pay()->render();
+
+//            return 'ok';
         }
 
     }
 
     public function callback(Request $request){
 
-        $payment = Payment::where('resnumber', $request->clientrefid)->firstOrFail();
+//        dd($request->all());
 
-        $token = config('services.payping.token');
-
-        $payping = new \PayPing\Payment($token);
+//        $payment = Payment::where('resnumber', $request->clientrefid)->firstOrFail();
+//
+//        $token = config('services.payping.token');
+//
+//        $payping = new \PayPing\Payment($token);
+//
+//        try {
+//            // $payment->price
+//            if($payping->verify($request->refid, 1000)){
+//
+//                $payment->update([
+//                    'status' => 1
+//                ]);
+//
+//                $payment->order()->update([
+//                    'status' => 'paid'
+//                ]);
+//
+//                 alert()->success('پرداخت شما موفق بود');
+//
+//                 return redirect('/products');
+//            }else{
+//                alert()->error('پرداخت شما تایید نشد');
+//                return redirect('/products');
+//            }
+//        } catch (\Exception $e) {
+//            $errors = collect(json_decode($e->getMessage() , true));
+//
+//             alert()->error($errors->first());
+//             return redirect('/products');
+//        }
 
         try {
-            // $payment->price
-            if($payping->verify($request->refid, 1000)){
+            $payment = Payment::where('resnumber', $request->Authority)->firstOrFail();
 
-                $payment->update([
-                    'status' => 1
-                ]);
+            // $payment->order->price
+            $receipt = ShetabitPayment::amount(1000)->transactionId($request->clientrefid)->verify();
 
-                $payment->order()->update([
-                    'status' => 'paid'
-                ]);
+            $payment->update([
+                'status' => 1
+            ]);
 
-                 alert()->success('پرداخت شما موفق بود');
+            $payment->order()->update([
+                'status' => 'paid'
+            ]);
 
-                 return redirect('/products');
-            }else{
-                alert()->error('پرداخت شما تایید نشد');
-                return redirect('/products');
-            }
-        } catch (\Exception $e) {
-            $errors = collect(json_decode($e->getMessage() , true));
+            alert()->success('پرداخت شما موفق بود');
+            return redirect('/products');
 
-             alert()->error($errors->first());
-             return redirect('/products');
+        } catch (InvalidPaymentException $exception) {
+            /**
+             * when payment is not verified, it will throw an exception.
+             * We can catch the exception to handle invalid payments.
+             * getMessage method, returns a suitable message that can be used in user interface.
+             **/
+            alert()->error($exception->getMessage());
+            return redirect('/products');
         }
 
     }

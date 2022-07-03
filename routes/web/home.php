@@ -138,7 +138,7 @@ Route::patch('/cart/quantity/change', [App\Http\Controllers\CartController::clas
 Route::delete('/cart/delete/{id}', [App\Http\Controllers\CartController::class, 'deleteItemFromCart'] )->name('cart.delete.item');
 
 Route::post('payment' , [App\Http\Controllers\PaymentController::class, 'payment'])->name('cart.payment');
-Route::post('payment/callback' , [App\Http\Controllers\PaymentController::class, 'callback'])->name('payment.callback');
+Route::get('payment/callback' , [App\Http\Controllers\PaymentController::class, 'callback'])->name('payment.callback');
 
 //test
 Route::get('/babak/{x}/{z}',function ($y, $w) {
