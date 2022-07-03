@@ -8,11 +8,17 @@
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-pills card-header-pills">
+
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->path() === 'profile' ? 'active' : '' }}" href="{{ route('profile') }}">Index</a>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->path() === 'profile/twofactor' ? 'active' : '' }}" href="{{ route('profile.2fa.manage') }}">TwoFactorAuth</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->path() === 'profile/orders' ? 'active' : '' }}" href="{{ route('profile.orders') }}">My Orders</a>
                             </li>
                         </ul>
                     </div>
