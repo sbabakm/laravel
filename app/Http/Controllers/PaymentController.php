@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Cart\Cart;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -86,7 +87,39 @@ class PaymentController extends Controller
 
     }
 
-    public function callback(){
+    public function callback(Request $request){
+
+        $payment = Payment::where('resnumber', $request->clientrefid)->firstOrFail();
+
+        $token = config('services.payping.token');
+
+        $payping = new \PayPing\Payment($token);
+
+        try {
+            // $payment->price
+            if($payping->verify($request->refid, 1000)){
+
+                $payment->update([
+                    'status' => 1
+                ]);
+
+                $payment->order()->update([
+                    'status' => 'paid'
+                ]);
+
+                 alert()->success('پرداخت شما موفق بود');
+
+                 return redirect('/products');
+            }else{
+                alert()->error('پرداخت شما تایید نشد');
+                return redirect('/products');
+            }
+        } catch (\Exception $e) {
+            $errors = collect(json_decode($e->getMessage() , true));
+
+             alert()->error($errors->first());
+             return redirect('/products');
+        }
 
     }
 
