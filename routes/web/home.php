@@ -126,6 +126,7 @@ Route::middleware('auth')->group(function (){
     Route::post('profile/twofactor/phone', [App\Http\Controllers\Profile\ProfileController::class , 'postPhoneVerify']);
 
     Route::get('profile/orders', [App\Http\Controllers\Profile\OrderController::class , 'index'])->name('profile.orders');
+    Route::get('profile/orders/{order}', [App\Http\Controllers\Profile\OrderController::class , 'showDetails'])->name('profile.orders.details');
 
 });
 

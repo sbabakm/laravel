@@ -5,38 +5,46 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
+                <div>
+                    <span>
+                        <span>آیدی سفارش:</span>
+                        <span>{{ $order->id }}</span>
+                    </span>
+                    <span class="mx-3">
+                        <span>تاریخ ثبت:</span>
+                        <span>{{  jdate($order->created_at )->format('%d %B %y') }}</span>
+                    </span>
+                    <span class="mx-3">
+                        <span>قیمت کل:</span>
+                        <span>{{ $order->price }}</span>
+                    </span>
+                    <span class="mx-3">
+                        <span>وضعیت سفارش:</span>
+                        <span>{{ $order->status }}</span>
+                    </span>
+                </div>
                 <table id="example2" class="table table-bordered table-hover dataTable" role="grid">
                     <thead>
                     <tr>
-                        <th>آیدی سفارش</th>
-                        <th>تاریخ ثبت</th>
-                        <th>قیمت کل</th>
-                        <th>وضعیت سفارش</th>
-                        <th>کد رهگیری پستی</th>
-                        <th>اقدامات</th>
+                        <th>شناسه محصول</th>
+                        <th>نام محصول</th>
+                        <th>قیمت محصول</th>
+                        <th>تعداد سفارش</th>
                     </tr>
                     </thead>
                     <tbody>
 
-                    @foreach($orders as $order)
+                    @foreach($order->products as $product)
                         <tr>
-                            <td>{{ $order->id }}</td>
-                            <td>{{  jdate($order->created_at )->format('%d %B %y') }}</td>
-                            <td>{{ $order->price }}</td>
-                            <td>{{ $order->status }}</td>
-                            <td>{{ $order->tracking_serial ?? 'هنوز ثبت نشده' }}</td>
+                            <td>{{ $product->id }}</td>
+                            <td>{{ $product->title }}</td>
+                            <td>{{ $product->price }}</td>
+                            <td>{{ $product->pivot->quantity }}</td>
 
-                            <td class="d-flex">
-                                <a href="{{ route('profile.orders.details', $order) }}" class="btn btn-sm btn-primary mr-1">مشاهده جزییات</a>
-                            </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-
-                <div class="d-flex justify-content-center">
-                    {{ $orders->links("pagination::bootstrap-4") }}
-                </div>
 
             </div>
         </div>

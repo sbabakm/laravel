@@ -27,7 +27,7 @@
                             <td>{{ $order->tracking_serial ?? 'هنوز ثبت نشده' }}</td>
 
                             <td class="d-flex">
-                                <a href="#" class="btn btn-sm btn-primary mr-1">مشاهده جزییات</a>
+                                <a href="{{ route('profile.orders.details', $order) }}" class="btn btn-sm btn-primary mr-1">مشاهده جزییات</a>
                             </td>
                         </tr>
                     @endforeach
