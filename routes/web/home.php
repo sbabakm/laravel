@@ -33,7 +33,7 @@ Route::get('/', function () {
 //    $user = \App\Models\User::find(1);
 //    return $user->permissions()->get();
 
-    auth()->loginUsingId(1);
+//    auth()->loginUsingId(1);
 //    auth()->logout();
 
 //    dd(auth()->user()->activeCode);
@@ -127,6 +127,7 @@ Route::middleware('auth')->group(function (){
 
     Route::get('profile/orders', [App\Http\Controllers\Profile\OrderController::class , 'index'])->name('profile.orders');
     Route::get('profile/orders/{order}', [App\Http\Controllers\Profile\OrderController::class , 'showDetails'])->name('profile.orders.details');
+    Route::get('profile/orders/{order}/payment', [App\Http\Controllers\Profile\OrderController::class , 'payment'])->name('profile.orders.payment');
 
 });
 

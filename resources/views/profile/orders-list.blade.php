@@ -28,6 +28,9 @@
 
                             <td class="d-flex">
                                 <a href="{{ route('profile.orders.details', $order) }}" class="btn btn-sm btn-primary mr-1">مشاهده جزییات</a>
+                                @if($order->status == 'unpaid')
+                                    <a href="{{ route('profile.orders.payment', $order) }}" class="btn btn-sm btn-warning mr-1">پرداخت سفارش</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
