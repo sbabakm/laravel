@@ -37,6 +37,12 @@
 
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 
+    <!-- persian date picker -->
+    <link rel="stylesheet" href="{{ asset('css/persian-datepicker.min.css') }}"/>
+    <script src="/plugins/jquery/jquery.min.js"></script>
+    <script src="{{ asset('js/persian-date.min.js') }}"></script>
+    <script src="{{ asset('js/persian-datepicker.min.js') }}"></script>
+
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -65,7 +71,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="/plugins/jquery/jquery.min.js"></script>
+{{--<script src="/plugins/jquery/jquery.min.js"></script>--}}
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -107,7 +113,7 @@
 {{--<script src="/dist/js/demo.js"></script>--}}
 @yield('script')
 <script src="{{ asset('js/admin.js') }}"></script>
-<script src="{{ asset('/js/app.js') }}"></script>
+{{--<script src="{{ asset('/js/app.js') }}"></script>--}}
 @include('sweet::alert')
 
 </body>
