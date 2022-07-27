@@ -26,6 +26,8 @@ Route::get('comments/unapproved',[App\Http\Controllers\Admin\CommentController::
 
 Route::resource('categories',CategoryController::class);
 
+Route::resource('/orders',OrderController::class);
+
 
 
 

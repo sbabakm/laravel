@@ -33,7 +33,7 @@ Route::get('/', function () {
 //    $user = \App\Models\User::find(1);
 //    return $user->permissions()->get();
 
-//    auth()->loginUsingId(1);
+    auth()->loginUsingId(1);
 //    auth()->logout();
 
 //    dd(auth()->user()->activeCode);
