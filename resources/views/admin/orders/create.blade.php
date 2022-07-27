@@ -13,8 +13,9 @@
             });
 
             $(document).ready(function() {
-                //$(".created_at").pDatepicker();
-                $('.created_at').persianDatepicker();
+                $(".created_at").pDatepicker();
+                //$('.created_at').persianDatepicker();
+
             });
 
         </script>
@@ -45,7 +46,7 @@
 
                         <div class="form-group">
                             <label for="label" class="col-sm-2 control-label">تاریخ ثبت</label>
-                            <input type="text" name="created_at" class="form-control" id="created_at">
+                            <input type="text" name="created_at" class="form-control created_at" id="created_at">
                         </div>
 
                         <div class="form-group">
