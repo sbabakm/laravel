@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -159,6 +160,15 @@ class ProductController extends Controller
     {
         $product->delete();
         return back();
+    }
+
+    public function productValuesBaseCategoryID(Request $request){
+        //dd($request->all());
+        $category = Category::find($request['categoryID']);
+        //dd($category->products);
+        return response()->json([
+            'data' => $category->products
+        ]);
     }
 
 }

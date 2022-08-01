@@ -28,6 +28,8 @@ Route::resource('categories',CategoryController::class);
 
 Route::resource('/orders',OrderController::class);
 
+Route::post('/productValuesBaseCategoryID', [App\Http\Controllers\Admin\ProductController::class, 'productValuesBaseCategoryID'] );
+
 
 
 

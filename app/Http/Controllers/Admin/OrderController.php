@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -40,7 +41,9 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('admin.orders.create');
+         $statusEnums = self::getStatusEnumsFromOrderTable();
+
+        return view('admin.orders.create' , compact('statusEnums'));
     }
 
     /**
@@ -51,7 +54,37 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
+
+        //$Jalalian = '1394-11-25 15:00:00';
+        //dd(\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d H:i:s', $Jalalian)->format('Y*m*d'));
+
+        //dd(request('created_at'));
+        //dd(\Morilog\Jalali\CalendarUtils::convertNumbers('۱۳۹۵-۰۲-۱۹ ۱۴:۰۴:۲۷', true));
+        //dd(\Morilog\Jalali\CalendarUtils::convertNumbers(request('created_at') , true));
+
+
+        //$Jalalian = '1394/11/25 15:00:00';
+        // 1- convert persian string to latin string
+        $Jalalian = \Morilog\Jalali\CalendarUtils::convertNumbers(request('created_at'), true);
+
+        //dd(\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $Jalalian));//ok shod
+        //dd(\Morilog\Jalali\CalendarUtils::createDatetimeFromFormat('Y/m/d H:i:s', $Jalalian));//ok shod
+
+        // 2- convert latin string to carbon
+        $created_at = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $Jalalian);//ok shod
+        //$created_at = \Morilog\Jalali\CalendarUtils::createDatetimeFromFormat('Y/m/d H:i:s', $Jalalian);//ok shod
+
+        // 3- save carbon in to database
+//        Order::create([
+//            'user_id' => '1',
+//            'price' => '11',
+//            'status' => 'unpaid',
+//            'tracking_serial' => '33',
+//            'created_at' => $created_at
+//        ]);
+
+
     }
 
     /**
@@ -97,5 +130,18 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public static function getStatusEnumsFromOrderTable()
+    {
+
+        $type = DB::select(DB::raw('SHOW COLUMNS FROM orders WHERE Field = "status"'))[0]->Type;
+        preg_match('/^enum\((.*)\)$/', $type, $matches);
+        $values = array();
+        foreach(explode(',', $matches[1]) as $value){
+            $values[] = trim($value, "'");
+        }
+        return $values;
+
     }
 }

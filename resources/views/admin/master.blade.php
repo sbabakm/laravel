@@ -43,6 +43,7 @@
     <script src="{{ asset('js/persian-date.min.js') }}"></script>
     <script src="{{ asset('js/persian-datepicker.min.js') }}"></script>
 
+    @yield('css')
 
 </head>
 <body class="hold-transition sidebar-mini">
