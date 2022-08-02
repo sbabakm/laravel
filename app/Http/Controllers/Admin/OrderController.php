@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +55,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
 
         //$Jalalian = '1394-11-25 15:00:00';
         //dd(\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y-m-d H:i:s', $Jalalian)->format('Y*m*d'));
@@ -66,13 +67,13 @@ class OrderController extends Controller
 
         //$Jalalian = '1394/11/25 15:00:00';
         // 1- convert persian string to latin string
-        $Jalalian = \Morilog\Jalali\CalendarUtils::convertNumbers(request('created_at'), true);
+        //$Jalalian = \Morilog\Jalali\CalendarUtils::convertNumbers(request('created_at'), true);
 
         //dd(\Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $Jalalian));//ok shod
         //dd(\Morilog\Jalali\CalendarUtils::createDatetimeFromFormat('Y/m/d H:i:s', $Jalalian));//ok shod
 
         // 2- convert latin string to carbon
-        $created_at = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $Jalalian);//ok shod
+        //$created_at = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $Jalalian);//ok shod
         //$created_at = \Morilog\Jalali\CalendarUtils::createDatetimeFromFormat('Y/m/d H:i:s', $Jalalian);//ok shod
 
         // 3- save carbon in to database
@@ -84,6 +85,43 @@ class OrderController extends Controller
 //            'created_at' => $created_at
 //        ]);
 
+        $validate_data = $request->validate([
+            'user' => ['required','exists:users,id'],
+            'created_at' => ['required'],
+            'status' => ['required'],
+            'tracking_serial' => ['required' , 'string' , 'digits:4'],
+            'products' => ['array']
+        ]);
+
+        // 1- convert persian string to latin string
+        $Jalalian = \Morilog\Jalali\CalendarUtils::convertNumbers(request('created_at'), true);
+
+        // 2- convert latin string to carbon
+        $created_at = \Morilog\Jalali\CalendarUtils::createCarbonFromFormat('Y/m/d H:i:s', $Jalalian);
+
+        $products = collect($validate_data['products']);
+
+        //3- compute total price
+        $totalPrice = $products->sum(function($item) {
+          $product = Product::find($item['productID']);
+          return $product->price * $item['quantity'];
+        });
+
+        // 4- save carbon in to database - create order
+       $order = Order::create([
+            'user_id' => $request->user,
+            'price' => $totalPrice,
+            'status' => $request->status,
+            'tracking_serial' => $request->tracking_serial,
+            'created_at' => $created_at
+        ]);
+
+       //5- create records in order_product table جدول واسط
+       $products->each(function ($item) use ($order){
+           $order->products()->attach($item['productID'] , ['quantity' =>  $item['quantity']]);
+       });
+
+        return redirect(route('admin.orders.index'));
 
     }
 
@@ -106,7 +144,13 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+
+        // convert latin to persian
+        $tempDate = \Morilog\Jalali\CalendarUtils::strftime('Y/m/d H:i:s', strtotime($order->created_at)); // 1395-02-19
+        $createdAtDefaultValue = \Morilog\Jalali\CalendarUtils::convertNumbers($tempDate); // ۱۳۹۵-۰۲-۱۹
+
+        $statusEnums = self::getStatusEnumsFromOrderTable();
+        return view('admin.orders.edit', compact('order','statusEnums','createdAtDefaultValue'));
     }
 
     /**
@@ -118,7 +162,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        //
+        dd($request->all());
     }
 
     /**

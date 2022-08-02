@@ -19,11 +19,13 @@
     @slot('script')
         <script>
 
+   {{--    because we use select2 in user field, we use following code instead of {{ old('user') == $user ? 'selected' : '' }} in user field  --}}
             $('#user').select2({
                 'placeholder' : 'کاربر مورد نظر را انتخاب کنید'
-            });
+            }).val('{{old('user')}}').change();
 
             $(document).ready(function() {
+
                 $("#created_at").pDatepicker({
                     autoClose: true,
                     format: 'YYYY/MM/DD HH:mm:ss',
@@ -40,9 +42,17 @@
                             enabled: false
                         }
                     },
+                    //initialValueType: 'persian'
 
                 });
+
                 //$('.created_at').persianDatepicker();
+
+                //set old value for created_at field
+                @if(old('created_at'))
+                    $("#created_at").val('{{old('created_at')}}');
+                @endif
+
             });
 
             let changeCategoryValues = (event , id) => {
@@ -166,6 +176,11 @@
                 $('.product-select').select2({ tags : false });
             });
 
+{{--    because we use select2 in user field, we use following code instead of {{ old('user') == $user ? 'selected' : '' }} in user field    --}}
+{{--            @if(old('user'))--}}
+{{--                --}}{{--$("#user").select2().val({{ old('user') }}).trigger("change");--}}
+{{--            @endif--}}
+
         </script>
     @endslot
 
@@ -189,6 +204,7 @@
                             <select name="user" class="form-control" id="user">
                                 @foreach(\App\Models\User::all() as $user)
                                     <option value=""></option>
+{{--                                    <option value="{{ $user->id }}" {{ old('user') == $user ? 'selected' : '' }}>{{ $user->name }}</option>      --}}
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
@@ -212,7 +228,7 @@
                             <label for="status" class="col-sm-2 control-label">وضعیت</label>
                             <select name="status" class="form-control" id="status">
                                @foreach($statusEnums as $item)
-                                   <option value="{{ $item }}">{{ $item }}</option>
+                                   <option value="{{ $item }}" {{ old('status') == $item ? 'selected' : '' }}>{{ $item }}</option>
                                 @endforeach
                             </select>
                         </div>
