@@ -28,6 +28,8 @@ Route::resource('categories',CategoryController::class);
 
 Route::resource('/orders',OrderController::class);
 
+Route::get('/order/{order}/payments', [App\Http\Controllers\Admin\OrderController::class, 'viewPayments'])->name('order.payments');
+
 Route::post('/productValuesBaseCategoryID', [App\Http\Controllers\Admin\ProductController::class, 'productValuesBaseCategoryID'] );
 
 

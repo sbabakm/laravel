@@ -215,4 +215,8 @@ class OrderController extends Controller
         return $values;
 
     }
+
+    public function viewPayments(Order $order){
+        return view('admin.orders.payments', compact('order'));
+    }
 }
