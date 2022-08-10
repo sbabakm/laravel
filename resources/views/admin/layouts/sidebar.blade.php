@@ -72,6 +72,44 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item has-treeview {{ isActive(['admin.orders.index','admin.orders.create','admin.orders.edit'] , 'menu-open') }}">
+                        <a href="#" class="nav-link {{ isActive(['admin.orders.index','admin.orders.create','admin.orders.edit']) }}">
+                            <i class="nav-icon fa fa-users"></i>
+                            <p>
+                                بخش سفارشات
+                                <i class="right fa fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+{{--                            <a href="{{ route('admin.orders.index') }}?search=paid" class="nav-link {{ isUrl('paid') }}">--}}
+                                <a href="{{ route('admin.orders.index' , ['type' => 'paid']) }}" class="nav-link {{ isUrl(route('admin.orders.index' , ['type' => 'paid'])) }} ">
+                                    <i class="fa fa-circle-o nav-icon text-success"></i>
+                                    <p>پرداخت شده
+                                        <span class="badge badge-info right">{{ \App\Models\Order::whereStatus('paid')->count() }}</span>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+{{--                            <a href="{{ route('admin.orders.index') }}?search=unpaid" class="nav-link {{ isUrl('unpaid') }}">--}}
+                                <a href="{{ route('admin.orders.index' , ['type' => 'unpaid']) }}" class="nav-link {{ isUrl(route('admin.orders.index' , ['type' => 'unpaid'])) }} ">
+                                    <i class="fa fa-circle-o nav-icon text-warning"></i>
+                                    <p>پرداخت نشده
+                                        <span class="badge badge-info right">{{ \App\Models\Order::whereStatus('unpaid')->count() }}</span>
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+{{--                            <a href="{{ route('admin.orders.index') }}?search=canceled" class="nav-link {{ isUrl('canceled') }}">--}}
+                                <a href="{{ route('admin.orders.index' , ['type' => 'canceled']) }}" class="nav-link {{ isUrl(route('admin.orders.index' , ['type' => 'canceled'])) }} ">
+                                    <i class="fa fa-circle-o nav-icon text-danger"></i>
+                                    <p>کنسل شده
+                                        <span class="badge badge-info right">{{ \App\Models\Order::whereStatus('canceled')->count() }}</span>
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
                 </ul>
             </nav>

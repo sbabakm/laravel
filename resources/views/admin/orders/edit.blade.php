@@ -212,28 +212,79 @@
 
                         <div class="form-group">
                             <label for="order_price" class="col-sm-2 control-label">قیمت کل</label>
-                            <input type="text" name="order_price" class="form-control" id="order_price" >
+                            <input type="text" name="order_price" class="form-control" id="order_price" value="{{ old('order_price' , $order->price) }}" >
                         </div>
 
                         <div class="form-group">
                             <label for="status" class="col-sm-2 control-label">وضعیت</label>
                             <select name="status" class="form-control" id="status">
                                 @foreach($statusEnums as $item)
-                                    <option value="{{ $item }}" {{ old('status') == $item ? 'selected' : '' }}>{{ $item }}</option>
+                                    <option value="{{ $item }}" {{ old('status' , $order->status ) == $item ? 'selected' : '' }}>{{ $item }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="tracking_serial" class="col-sm-2 control-label">کد رهگیری پستی</label>
-                            <input type="text" name="tracking_serial" class="form-control" id="tracking_serial">
+                            <input type="text" name="tracking_serial" class="form-control" id="tracking_serial" value="{{ old('tracking_serial' , $order->tracking_serial) }}">
                         </div>
 
                         <h6>محصولات</h6>
                         <hr>
+
                         <div id="product_section">
 
+                            @foreach($order->products as $product)
+{{--                                @php--}}
+{{--                                    $count = 0;--}}
+{{--                                    if($count != 0){--}}
+{{--                                        $count++;--}}
+{{--                                    }--}}
+{{--                                @endphp--}}
+                                <div class="row" id="product-{{ $loop->index }}">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>دسته بندی</label>
+                                            <select name="products[{{ $loop->index }}][categoryID]" onchange="changeCategoryValues(event, {{ $loop->index }});" class="product-select form-control">
+                                                <option value="">انتخاب کنید</option>
+                                                @foreach(\App\Models\Category::all() as $cate)
+                                                    <option value="{{ $cate->id }}" {{ $product->categories()->first()->id == $cate->id ? 'selected' : '' }}>{{ $cate->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>محصول</label>
+                                            <select name="products[{{ $loop->index }}][productID]" onchange="changeProductValues(event, {{ $loop->index }});" class="product-select form-control">
+                                                <option value="">انتخاب کنید</option>
+                                                @foreach(\App\Models\Product::all() as $pro)
+                                                    <option value="{{ $pro->id }}" {{ $product->id == $pro->id ? 'selected' : '' }} data-inventory="{{ $pro->inventory }}}">{{ $pro->title }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label>تعداد</label>
+                                            <select name="products[{{ $loop->index }}][quantity]" class="form-control" id="quantity-{{ $loop->index }}">
+                                                @foreach(range(1, $product->inventory) as $inv)
+                                                    <option value="{{$inv}}" {{ $product->pivot->quantity == $inv ? 'selected' : '' }} >{{$inv}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <label >اقدامات</label>
+                                        <div>
+                                            <button type="button" class="btn btn-sm btn-warning" onclick="document.getElementById('product-{{ $loop->index }}').remove()">حذف</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+
                         </div>
+
                         <button class="btn btn-sm btn-danger" type="button" id="add_product">افزودن محصول</button>
 
                     </div>

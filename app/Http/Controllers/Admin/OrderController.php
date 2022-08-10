@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 class OrderController extends Controller
 {
@@ -18,6 +19,15 @@ class OrderController extends Controller
      */
     public function index()
     {
+        //dd(request()->fullUrl());
+        //dd(request()->fullUrlWithQuery(['param' => 1]));
+        //dd(request()->fullUrlIs('http://127.0.0.1:8000/admin/orders'));
+        //dd(request()->fullUrlIs(route('admin.orders.index')));
+        //dd(request()->path());
+        //dd(Route::currentRouteName());
+        //dd(Route::currentRouteAction());
+        //dd(Route::current());
+
         $orders = Order::query();
 
         if ($search = request('search')) {
@@ -29,7 +39,14 @@ class OrderController extends Controller
                 });
         }
 
-        $orders = $orders->orderBy('id', 'desc')->paginate(5);
+        // request('type') is used in admin/layouts/sidebar.blade.php
+        if(request('type')){
+            $orders = $orders->where('status', request('type'))->orderBy('id', 'desc')->paginate(5);
+        }
+        else{
+            $orders = $orders->orderBy('id', 'desc')->paginate(5);
+        }
+
         //$orders = Order::orderBy('id','desc')->paginate(5);
 
         return view('admin.orders.all', compact('orders'));
@@ -162,7 +179,16 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        dd($request->all());
+        //dd($request->all());
+
+        $validate_data = $request->validate([
+            'user' => ['required','exists:users,id'],
+            'created_at' => ['required'],
+            'status' => ['required'],
+            'tracking_serial' => ['required' , 'string' , 'digits:4'],
+            'products' => ['array']
+        ]);
+
     }
 
     /**
@@ -173,7 +199,8 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return back();
     }
 
     public static function getStatusEnumsFromOrderTable()
