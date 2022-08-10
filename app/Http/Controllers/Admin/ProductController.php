@@ -7,6 +7,7 @@ use App\Models\Attribute;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -142,14 +143,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+
         $validate_data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required'],
             'price' => ['required'],
             'inventory' => ['required'],
             'categories' => ['array'],
-            'attributes' => ['array']
+            'attributes' => ['array'],
+            'image' => 'required|mimes:png,jpg,jpeg|max:1000'
         ]);
+
+        if(File::exists(public_path($product->image))){
+            File::delete(public_path($product->image));
+        }
+
+        $file = $request->file('image');
+        $destinationPath = '/imagesTest/' . now()->year . '/' . now()->month . '/' . now()->day . '/' ;
+        $file->move( public_path($destinationPath) , $file->getClientOriginalName());
+
+        $validate_data['image'] = $destinationPath . $file->getClientOriginalName();
 
         $product->update($validate_data);
         $product->categories()->sync($validate_data['categories']);

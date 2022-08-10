@@ -137,6 +137,7 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">آپلود تصویر شاخص</label>
                             <input type="file" name="image">
                         </div>
 
