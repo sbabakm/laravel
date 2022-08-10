@@ -106,7 +106,7 @@
                 <!-- /.card-header -->
                 <div id="attributes" data-type="{{ \App\Models\Attribute::all()->pluck('name') }}"></div>
                 <!-- form start -->
-                <form class="form-horizontal" action="{{ route('admin.products.store') }}" method="POST">
+                <form class="form-horizontal" action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -135,6 +135,11 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <input type="file" name="image">
+                        </div>
+
                         <h6>ویژگی محصول</h6>
                         <hr>
                         <div id="attribute_section">

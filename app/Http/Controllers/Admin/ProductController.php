@@ -53,6 +53,18 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
+        //dd($request->file('image'));
+        //dd($request->file('image')->getExtension());
+        //dd($request->file('image')->getClientOriginalExtension());
+        //dd($request->file('image')->getClientOriginalName());
+        //dd($request->file('image')->getClientMimeType());
+
+        $file = $request->file('image');
+        //$file->move(public_path('imagesTest'), 'abcd.'.$file->getClientOriginalExtension());
+        $file->move(public_path('imagesTest'), $file->getClientOriginalName());
+
+        return 'okkk';
+
         $validate_data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['required'],
