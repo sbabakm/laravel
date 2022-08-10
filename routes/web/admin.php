@@ -30,6 +30,8 @@ Route::resource('/orders',OrderController::class);
 
 Route::get('/order/{order}/payments', [App\Http\Controllers\Admin\OrderController::class, 'viewPayments'])->name('order.payments');
 
+Route::get('/order/{order}/details', [App\Http\Controllers\Admin\OrderController::class, 'orderDetails'])->name('order.details');
+
 Route::post('/productValuesBaseCategoryID', [App\Http\Controllers\Admin\ProductController::class, 'productValuesBaseCategoryID'] );
 
 

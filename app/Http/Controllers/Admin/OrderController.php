@@ -219,4 +219,8 @@ class OrderController extends Controller
     public function viewPayments(Order $order){
         return view('admin.orders.payments', compact('order'));
     }
+
+    public function orderDetails(Order $order){
+        return view('admin.orders.order-detail', compact('order'));
+    }
 }

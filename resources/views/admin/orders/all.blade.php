@@ -50,6 +50,8 @@
 
                     <a href="{{ route('admin.order.payments' , $order) }}" class="btn btn-sm btn-warning mr-1">مشاهده پرداخت ها</a>
 
+                    <a href="{{ route('admin.order.details' , $order) }}" class="btn btn-sm btn-success mr-1">جزییات سفارش</a>
+
                 </td>
             </tr>
         @endforeach
