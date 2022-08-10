@@ -33,7 +33,8 @@ return [
         'images' => [
             'driver' => 'local',
             'root' => public_path('imagesTestFileManager'),
-            'url' => env('APP_URL').'/images222',
+            //'url' => env('APP_URL').'/images222',
+            'url' => '/imagesTestFileManager',
         ],
 
         'local' => [
