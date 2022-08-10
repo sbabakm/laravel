@@ -59,11 +59,21 @@ class ProductController extends Controller
         //dd($request->file('image')->getClientOriginalName());
         //dd($request->file('image')->getClientMimeType());
 
-        $file = $request->file('image');
+        //$file = $request->file('image');
         //$file->move(public_path('imagesTest'), 'abcd.'.$file->getClientOriginalExtension());
-        $file->move(public_path('imagesTest'), $file->getClientOriginalName());
+        //$file->move(public_path('imagesTest'), $file->getClientOriginalName());
 
-        return 'okkk';
+//        $request->validate([
+//            'image' => 'required|image'
+//            'image' => 'required|mimes:jpg,jpeg'
+//            'image' => 'required|mimes:png,jpg,jpeg|max:10'
+//        ]);
+
+
+//        $file = $request->file('image');
+//        $destinationPath = '/imagesTest/' . now()->year . '/' . now()->month . '/' . now()->day . '/' ;
+//        $file->move( public_path($destinationPath) , $file->getClientOriginalName());
+
 
         $validate_data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -71,8 +81,15 @@ class ProductController extends Controller
             'price' => ['required'],
             'inventory' => ['required'],
             'categories' => ['array'],
-            'attributes' => ['array']
+            'attributes' => ['array'],
+            'image' => 'required|mimes:png,jpg,jpeg|max:1000'
         ]);
+
+        $file = $request->file('image');
+        $destinationPath = '/imagesTest/' . now()->year . '/' . now()->month . '/' . now()->day . '/' ;
+        $file->move( public_path($destinationPath) , $file->getClientOriginalName());
+
+        $validate_data['image'] = $destinationPath . $file->getClientOriginalName();
 
         $product = auth()->user()->products()->create($validate_data);
 
