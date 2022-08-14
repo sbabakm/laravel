@@ -83,14 +83,15 @@ class ProductController extends Controller
             'inventory' => ['required'],
             'categories' => ['array'],
             'attributes' => ['array'],
-            'image' => 'required|mimes:png,jpg,jpeg|max:1000'
+            //'image' => 'required|mimes:png,jpg,jpeg|max:1000',
+            'image' => 'required'
         ]);
 
-        $file = $request->file('image');
-        $destinationPath = '/imagesTest/' . now()->year . '/' . now()->month . '/' . now()->day . '/' ;
-        $file->move( public_path($destinationPath) , $file->getClientOriginalName());
+        //$file = $request->file('image');
+        //$destinationPath = '/imagesTest/' . now()->year . '/' . now()->month . '/' . now()->day . '/' ;
+        //$file->move( public_path($destinationPath) , $file->getClientOriginalName());
 
-        $validate_data['image'] = $destinationPath . $file->getClientOriginalName();
+        //$validate_data['image'] = $destinationPath . $file->getClientOriginalName();
 
         $product = auth()->user()->products()->create($validate_data);
 
@@ -151,18 +152,19 @@ class ProductController extends Controller
             'inventory' => ['required'],
             'categories' => ['array'],
             'attributes' => ['array'],
-            'image' => 'required|mimes:png,jpg,jpeg|max:1000'
+            //'image' => 'required|mimes:png,jpg,jpeg|max:1000',
+            'image' => 'required'
         ]);
 
-        if(File::exists(public_path($product->image))){
-            File::delete(public_path($product->image));
-        }
-
-        $file = $request->file('image');
-        $destinationPath = '/imagesTest/' . now()->year . '/' . now()->month . '/' . now()->day . '/' ;
-        $file->move( public_path($destinationPath) , $file->getClientOriginalName());
-
-        $validate_data['image'] = $destinationPath . $file->getClientOriginalName();
+//        if(File::exists(public_path($product->image))){
+//            File::delete(public_path($product->image));
+//        }
+//
+//        $file = $request->file('image');
+//        $destinationPath = '/imagesTest/' . now()->year . '/' . now()->month . '/' . now()->day . '/' ;
+//        $file->move( public_path($destinationPath) , $file->getClientOriginalName());
+//
+//        $validate_data['image'] = $destinationPath . $file->getClientOriginalName();
 
         $product->update($validate_data);
         $product->categories()->sync($validate_data['categories']);
