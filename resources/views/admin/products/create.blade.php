@@ -6,7 +6,12 @@
     @endslot
 
     @slot('script')
+
+        <script src="/js/ckeditor-4/ckeditor.js"></script>
+
         <script>
+
+            CKEDITOR.replace( 'description' );
 
             document.addEventListener("DOMContentLoaded", function() {
 
