@@ -34,6 +34,8 @@ Route::get('/order/{order}/details', [App\Http\Controllers\Admin\OrderController
 
 Route::post('/productValuesBaseCategoryID', [App\Http\Controllers\Admin\ProductController::class, 'productValuesBaseCategoryID'] );
 
+Route::resource('product.gallery' , ProductGalleryController::class);
+
 
 
 

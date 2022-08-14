@@ -51,6 +51,8 @@
 {{--                        <a href="{{ route('admin.products.edit' , $product) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>--}}
 {{--                    @endcan--}}
                     <a href="{{ route('admin.products.edit' , $product) }}" class="btn btn-sm btn-primary mr-1">ویرایش</a>
+                    <a href="{{ route('admin.product.gallery.index' , $product) }}" class="btn btn-sm btn-warning mr-1">گالری تصاویر</a>
+
                 </td>
             </tr>
         @endforeach
