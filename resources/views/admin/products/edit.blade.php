@@ -152,14 +152,14 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="form-control mb-2" dir="ltr" value="{{ $product->image }}" disabled>
+{{--                            <input type="text" class="form-control mb-2" dir="ltr" value="{{ $product->image }}" disabled>--}}
                             <img class="w-25" src="{{ $product->image }}" alt="">
                             <hr>
                             <label class="col-sm-2 control-label">آپلود تصویر شاخص</label>
 {{--                            <input type="file" name="image" class="form-control">--}}
                             <div class="input-group">
                                 <input type="text" id="image_label" class="form-control" name="image"
-                                       aria-label="Image" aria-describedby="button-image">
+                                       aria-label="Image" aria-describedby="button-image" value="{{ $product->image }}">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" id="button-image">انتخاب</button>
                                 </div>
