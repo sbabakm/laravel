@@ -156,14 +156,14 @@
                             <img class="w-25" src="{{ $product->image }}" alt="">
                             <hr>
                             <label class="col-sm-2 control-label">آپلود تصویر شاخص</label>
-{{--                            <input type="file" name="image" class="form-control">--}}
-                            <div class="input-group">
-                                <input type="text" id="image_label" class="form-control" name="image"
-                                       aria-label="Image" aria-describedby="button-image" value="{{ $product->image }}">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="button-image">انتخاب</button>
-                                </div>
-                            </div>
+                            <input type="file" name="file" class="form-control">
+{{--                            <div class="input-group">--}}
+{{--                                <input type="text" id="image_label" class="form-control" name="image"--}}
+{{--                                       aria-label="Image" aria-describedby="button-image" value="{{ $product->image }}">--}}
+{{--                                <div class="input-group-append">--}}
+{{--                                    <button class="btn btn-outline-secondary" type="button" id="button-image">انتخاب</button>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
 
                         <h6>ویژگی محصول</h6>

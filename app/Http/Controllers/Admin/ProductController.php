@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -144,6 +145,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+
+        //test storage
+        //dd($request->file('file'));
+        //Storage::putFile('files' , $request->file('file'));
+        //Storage::putFile('files' , $request->file('file'));
+        //Storage::putFileAs('files' , $request->file('file') , $request->file('file')->getClientOriginalName());
+        //Storage::disk('public')->putFileAs('files' , $request->file('file') , $request->file('file')->getClientOriginalName());
+        //Storage::disk('public')->putFileAs('' , $request->file('file') , $request->file('file')->getClientOriginalName());
+        //return 'ok';
 
         $validate_data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
