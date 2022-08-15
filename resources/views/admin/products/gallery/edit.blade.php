@@ -33,7 +33,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="{{ route('admin.products.gallery.update' , ['product' => $product->id, 'gallery' => $gallery->id ]) }}" method="POST" enctype="multipart/form-data">
+                <form class="form-horizontal" action="{{ route('admin.product.gallery.update' , ['product' => $product->id, 'gallery' => $gallery->id ]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
 
@@ -66,7 +66,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <button type="submit" class="btn btn-info">ویرایش تصاویر</button>
-                        <a href="{{ route('admin.products.gallery.index' , ['product' => $product->id]) }}" class="btn btn-default float-left">لغو</a>
+                        <a href="{{ route('admin.product.gallery.index' , ['product' => $product->id]) }}" class="btn btn-default float-left">لغو</a>
                     </div>
                     <!-- /.card-footer -->
                 </form>
