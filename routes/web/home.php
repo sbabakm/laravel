@@ -145,6 +145,11 @@ Route::delete('/cart/delete/{id}', [App\Http\Controllers\CartController::class, 
 Route::post('payment' , [App\Http\Controllers\PaymentController::class, 'payment'])->name('cart.payment');
 Route::get('payment/callback' , [App\Http\Controllers\PaymentController::class, 'callback'])->name('payment.callback');
 
+Route::get('download/{file}', function ($file) {
+    //return \Illuminate\Support\Facades\Storage::download($file);
+    return \Illuminate\Support\Facades\Storage::disk('public')->download($file);
+});
+
 //test
 Route::get('/babak/{x}/{z}',function ($y, $w) {
     return ' salam ' . $y . ' ' . $w;
