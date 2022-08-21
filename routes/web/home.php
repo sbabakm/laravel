@@ -150,6 +150,16 @@ Route::get('download/{file}', function ($file) {
     return \Illuminate\Support\Facades\Storage::disk('public')->download($file);
 });
 
+Route::get('download2/{user}', function () {
+    return \Illuminate\Support\Facades\Storage::download(request('path'));
+    //return \Illuminate\Support\Facades\Storage::disk('public')->download(request('path'));
+})->name('download.file')->middleware('signed');
+
+Route::get('createSafeDownloadLink', function () {
+    //return route('download.file',['user' => auth()->user()->id , 'path' => 'files/123.png']);
+    return \Illuminate\Support\Facades\URL::temporarySignedRoute('download.file', now()->addMinutes(30), ['user' => auth()->user()->id , 'path' => 'files/123.png'] );
+});
+
 //test
 Route::get('/babak/{x}/{z}',function ($y, $w) {
     return ' salam ' . $y . ' ' . $w;
