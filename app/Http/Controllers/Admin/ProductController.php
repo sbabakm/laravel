@@ -55,6 +55,13 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
+//        foreach ($request['attributes'] as $item){
+//            echo $item['name'] . '<br>';
+//        }
+
+//        die();
+//        dd($request->all());
+
         //dd($request->file('image'));
         //dd($request->file('image')->getExtension());
         //dd($request->file('image')->getClientOriginalExtension());

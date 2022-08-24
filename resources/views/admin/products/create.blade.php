@@ -172,6 +172,10 @@
 
                         </div>
                         <button class="btn btn-sm btn-danger" type="button" id="add_product_attribute">ویژگی جدید</button>
+
+{{--                        <input name="attachs[0]" type="text" class="form-control">--}}
+{{--                        <input name="attachs[1]" type="text" class="form-control">--}}
+{{--                        <input name="attachs[2]" type="text" class="form-control">--}}
                     </div>
                     <!-- /.card-body -->
                     <div class="card-footer">
