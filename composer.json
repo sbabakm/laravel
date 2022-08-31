@@ -8,6 +8,7 @@
         "php": "^7.3|^8.0",
         "alexusmai/laravel-file-manager": "2.5.4",
         "babenkoivan/elastic-scout-driver": "^3.0",
+        "doctrine/dbal": "^3.4",
         "fideloper/proxy": "^4.4",
         "flotfeali/payping-client": "*",
         "fruitcake/laravel-cors": "^2.0",
