@@ -180,3 +180,7 @@ Route::get('show/cookie',function (){
     dd(request()->cookie());
 });
 
+Route::get('/elastic', function(){
+    return \App\Models\Product::search('test')->get();
+});
+
