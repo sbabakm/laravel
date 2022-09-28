@@ -1,7 +1,7 @@
 @component('admin.layouts.content' , ['title' => 'ایجاد کد تخفیف'])
     @slot('breadcrumb')
         <li class="breadcrumb-item"><a href="/admin">پنل مدیریت</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('admin.discount.index') }}">لیست تخفیف‌ها</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin.discounts.index') }}">لیست تخفیف‌ها</a></li>
         <li class="breadcrumb-item active">ایجاد کد تخفیف</li>
     @endslot
 
@@ -31,7 +31,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="{{ route('admin.discount.store') }}" method="POST">
+                <form class="form-horizontal" action="{{ route('admin.discounts.store') }}" method="POST">
                     @csrf
 
                     <div class="card-body">
@@ -47,7 +47,7 @@
                             <label class="col-sm-2 control-label">کاربر مربوط به تخفیف (اختیاری)</label>
                             <select class="form-control" name="users[]" id="users" multiple>
                                 <option value="null">همه کاربرها</option>
-                                @foreach(\App\User::all() as $user)
+                                @foreach(\App\Models\User::all() as $user)
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
@@ -56,7 +56,7 @@
                             <label for="inputPassword3" class="col-sm-2 control-label">محصول مربوطه (اختیاری)</label>
                             <select class="form-control" name="products[]" id="products" multiple>
                                 <option value="null">همه محصول</option>
-                                @foreach(\App\Product::all() as $product)
+                                @foreach(\App\Models\Product::all() as $product)
                                     <option value="{{ $product->id }}">{{ $product->title }}</option>
                                 @endforeach
                             </select>
@@ -65,7 +65,7 @@
                             <label for="inputPassword3" class="col-sm-2 control-label">دسته‌بندی مربوطه (اختیاری)</label>
                             <select class="form-control" name="categories[]" id="categories" multiple>
                                 <option value="null">همه دسته‌ها</option>
-                                @foreach(\App\Category::all() as $category)
+                                @foreach(\App\Models\Category::all() as $category)
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
@@ -78,7 +78,7 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <button type="submit" class="btn btn-info">ثبت کد تخفیف</button>
-                        <a href="{{ route('admin.discount.index') }}" class="btn btn-default float-left">لغو</a>
+                        <a href="{{ route('admin.discounts.index') }}" class="btn btn-default float-left">لغو</a>
                     </div>
                     <!-- /.card-footer -->
                 </form>

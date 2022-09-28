@@ -5,6 +5,7 @@ namespace Modules\Discount\Http\Controllers\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Discount\Entities\Discount;
 
 class DiscountController extends Controller
 {
@@ -23,7 +24,7 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        return view('discount::create');
+        return view('discount::admin.create');
     }
 
     /**
@@ -33,7 +34,27 @@ class DiscountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+
+        $validated = $request->validate([
+            'code' => 'required|unique:discounts,code',
+            'percent' => 'required|integer|between:1,99',
+            'users' => 'nullable|array|exists:users,id',
+            'products' => 'nullable|array|exists:products,id',
+            'categories' => 'nullable|array|exists:categories,id',
+            'expired_at' => 'required',
+        ]);
+
+       // dd($validated);
+
+        $discount = Discount::create($validated);
+
+        $discount->users()->sync($validated['users']);
+        $discount->products()->sync($validated['products']);
+        $discount->categories()->sync($validated['categories']);
+
+        return redirect(route('admin.discounts.index'));
+
     }
 
     /**

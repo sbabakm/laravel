@@ -11,6 +11,6 @@
 |
 */
 
-Route::prefix('discount')->group(function() {
-    Route::get('/', 'DiscountController@index');
-});
+//Route::prefix('discount')->group(function() {
+//    Route::get('/', 'DiscountController@index');
+//});
