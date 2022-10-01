@@ -5,6 +5,7 @@ namespace Modules\Discount\Http\Controllers\Admin;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\Rule;
 use Modules\Discount\Entities\Discount;
 
 class DiscountController extends Controller
@@ -15,7 +16,8 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        return view('discount::index');
+        $discounts = Discount::paginate(10);
+        return view('discount::admin.all', compact('discounts'));
     }
 
     /**
@@ -58,23 +60,13 @@ class DiscountController extends Controller
     }
 
     /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('discount::show');
-    }
-
-    /**
      * Show the form for editing the specified resource.
      * @param int $id
      * @return Renderable
      */
-    public function edit($id)
+    public function edit(Discount $discount)
     {
-        return view('discount::edit');
+        return view('discount::admin.edit', compact('discount'));
     }
 
     /**
@@ -83,9 +75,25 @@ class DiscountController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Discount $discount)
     {
-        //
+        $validated = $request->validate([
+            'code' => ['required', Rule::unique('discounts')->ignore($discount->id)],
+            'percent' => 'required|integer|between:1,99',
+            'users' => 'nullable|array|exists:users,id',
+            'products' => 'nullable|array|exists:products,id',
+            'categories' => 'nullable|array|exists:categories,id',
+            'expired_at' => 'required',
+        ]);
+
+        $discount->update($validated);
+
+        isset($validated['users']) ? $discount->users()->sync($validated['users']) : $discount->users()->detach();
+        isset($validated['products']) ? $discount->products()->sync($validated['products']) : $discount->products()->detach();
+        isset($validated['categories']) ? $discount->categories()->sync($validated['categories']) : $discount->categories()->detach();
+
+        return redirect(route('admin.discounts.index'));
+
     }
 
     /**

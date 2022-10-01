@@ -22,7 +22,7 @@
                         </form>
                         <div class="btn-group-sm mr-1">
 {{--                            @can('create-product')--}}
-                                <a href="{{ route('admin.discount.create') }}" class="btn btn-info">ایجاد تخفیف جدید</a>
+                                <a href="{{ route('admin.discounts.create') }}" class="btn btn-info">ایجاد تخفیف جدید</a>
 {{--                            @endcan--}}
                         </div>
                     </div>
@@ -53,12 +53,12 @@
                                 <td>{{ jdate($discount->expired_at)->ago() }}</td>
                                 <td class="d-flex">
 {{--                                    // permissions--}}
-                                    <form action="{{ route('admin.discount.destroy' , $discount->id) }}" method="POST">
+                                    <form action="{{ route('admin.discounts.destroy' , $discount->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger ml-1">حذف</button>
                                     </form>
-                                    <a href="{{ route('admin.discount.edit' , $discount->id) }}" class="btn btn-sm btn-primary ml-1">ویرایش</a>
+                                    <a href="{{ route('admin.discounts.edit' , $discount->id) }}" class="btn btn-sm btn-primary ml-1">ویرایش</a>
                                 </td>
                             </tr>
                         @endforeach

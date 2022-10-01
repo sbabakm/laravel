@@ -1,3 +1,3 @@
 <?php
 
-Route::resource('discounts', DiscountController::class);
+Route::resource('discounts', DiscountController::class)->except(['show']);
