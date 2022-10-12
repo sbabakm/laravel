@@ -124,6 +124,25 @@
                     </div>
                 </div>
 
+                <div class="float-right">
+                    <form action="{{ route('cart.discount.check') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="cart" value="roocket">
+                        <input class="form-control" type="text" name="discount" placeholder="کد تخفیف را وارد نمایید">
+                        <button class="btn btn-success mt-1" type="submit">اعمال کد تخفیف</button>
+
+                        @if($errors->has('discount'))
+                                 <div class="text-danger text-sm mt-2">{{ $errors->first('discount') }}</div>
+                        @endif
+
+                        @error('discount')
+                             <div class="text-danger text-sm mt-2">{{ $message }}</div>
+                        @enderror
+
+
+                    </form>
+                </div>
+
                 <div class="float-left">
                     <form action="{{ route('cart.payment') }}" method="POST">
                         @csrf
