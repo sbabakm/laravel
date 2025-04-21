@@ -184,3 +184,22 @@ Route::get('/elastic', function(){
     return \App\Models\Product::search('test')->get();
 });
 
+
+Route::post('/test', [App\Http\Controllers\ProductController::class, 'test']);
+
+Route::get('/testCollection', function(){
+//    collect([1,2,3,4])->each(function ($item) {
+//        if($item == 2) {
+//            return true;
+//        }
+//        echo $item;
+//    });
+
+    collect([1,2,3,4])->each(function ($item) {
+        if($item == 2) {
+            return false;
+        }
+        echo $item;
+    });
+
+});
